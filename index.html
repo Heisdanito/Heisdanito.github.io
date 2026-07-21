@@ -13,17 +13,7 @@
 <body>
 
 <div class="scroll-progress" id="scrollProgress"></div>
-<div class="bg-glow bg-glow-1"></div>
-<div class="bg-glow bg-glow-2"></div>
-<div class="bg-glow bg-glow-3"></div>
-<div class="bg-lines" aria-hidden="true">
-  <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
-    <path class="bg-line bg-line-1" d="M-100,150 C 250,50 750,250 1100,120" />
-    <path class="bg-line bg-line-2" d="M-100,420 C 300,320 700,520 1100,400" />
-    <path class="bg-line bg-line-3" d="M-100,680 C 250,600 750,780 1100,660" />
-    <path class="bg-line bg-line-4" d="M-100,900 C 300,820 700,980 1100,880" />
-  </svg>
-</div>
+<canvas id="bgCanvas" aria-hidden="true"></canvas>
 
 <header class="site-header" id="top">
   <nav class="nav container">
@@ -454,6 +444,7 @@
   </div>
 </div>
 
+<script src="particles.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
