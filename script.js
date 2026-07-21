@@ -6,10 +6,80 @@ const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => {
   const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
   navToggle.setAttribute('aria-expanded', open);
 });
 navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('open'));
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+  });
+});
+
+// Scroll progress bar
+const scrollProgress = document.getElementById('scrollProgress');
+function updateScrollProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrollProgress.style.width = `${pct}%`;
+}
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
+
+// Scroll-reveal animations
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.revealDelay || 0;
+      setTimeout(() => entry.target.classList.add('is-visible'), delay);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('main section[id], header#top');
+const navAnchors = document.querySelectorAll('.nav-links a[data-nav]');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navAnchors.forEach(a => a.classList.toggle('active', a.dataset.nav === id));
+    }
+  });
+}, { threshold: 0.4, rootMargin: '-74px 0px -50% 0px' });
+sections.forEach(sec => navObserver.observe(sec));
+
+// Rotating hero role text
+const heroRole = document.getElementById('heroRole');
+if (heroRole) {
+  const roles = ['Frontend Developer', 'React Developer', 'UI Engineer', 'Full-Stack Builder'];
+  let roleIndex = 0;
+  setInterval(() => {
+    roleIndex = (roleIndex + 1) % roles.length;
+    heroRole.style.opacity = 0;
+    setTimeout(() => {
+      heroRole.textContent = roles[roleIndex];
+      heroRole.style.opacity = 1;
+    }, 250);
+  }, 2800);
+  heroRole.style.transition = 'opacity .25s ease';
+}
+
+// Project card tilt-on-hover
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(700px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
 });
 
 // Contact form -> opens the visitor's email client with a prefilled message
@@ -32,9 +102,17 @@ const aiChatClose = document.getElementById('aiChatClose');
 const aiChatForm = document.getElementById('aiChatForm');
 const aiChatInput = document.getElementById('aiChatInput');
 const aiChatMessages = document.getElementById('aiChatMessages');
+const aiChatPanel = document.getElementById('aiChatPanel');
 
-aiChatToggle.addEventListener('click', () => aiChat.classList.toggle('open'));
-aiChatClose.addEventListener('click', () => aiChat.classList.remove('open'));
+aiChatToggle.addEventListener('click', () => {
+  const open = aiChat.classList.toggle('open');
+  if (open) requestAnimationFrame(() => aiChatPanel.classList.add('animate-in'));
+  else aiChatPanel.classList.remove('animate-in');
+});
+aiChatClose.addEventListener('click', () => {
+  aiChat.classList.remove('open');
+  aiChatPanel.classList.remove('animate-in');
+});
 
 const NVIDIA_API_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 // NOTE: this key is exposed to anyone who views this site's source — it is

@@ -7,24 +7,28 @@
 <meta name="description" content="Portfolio of Heisdanito, a frontend developer building clean, functional interfaces with React, PHP and MySQL.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
 <header class="site-header" id="top">
   <nav class="nav container">
-    <a href="#top" class="logo">Heisdanito</a>
+    <a href="#top" class="logo">Heis<span>danito</span><i class="logo-dot"></i></a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#top">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact" class="nav-cta">Contact</a></li>
+      <li><a href="#top" data-nav="top">Home</a></li>
+      <li><a href="#about" data-nav="about">About</a></li>
+      <li><a href="#skills" data-nav="skills">Skills</a></li>
+      <li><a href="#projects" data-nav="projects">Projects</a></li>
+      <li><a href="#experience" data-nav="experience">Experience</a></li>
+      <li><a href="#contact" class="nav-cta" data-nav="contact">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -34,14 +38,16 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
-      <div class="hero-text">
-        <p class="eyebrow">Hello, I'm</p>
-        <h1>Daniel <span>“Heisdanito”</span></h1>
-        <p class="hero-role">Frontend Developer</p>
+      <div class="hero-text reveal">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Hello, I'm</p>
+        <h1>Daniel <span class="gradient-text">“Heisdanito”</span></h1>
+        <p class="hero-role">
+          <span class="mono-bracket">&lt;</span><span id="heroRole">Frontend Developer</span><span class="cursor-blink">|</span><span class="mono-bracket">/&gt;</span>
+        </p>
         <p class="hero-tagline">I build clean, functional interfaces with React, PHP and MySQL — turning rough ideas into products people can actually use.</p>
         <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+          <a href="#projects" class="btn btn-primary"><span>View Projects</span></a>
+          <a href="#contact" class="btn btn-outline"><span>Get In Touch</span></a>
         </div>
         <ul class="hero-social">
           <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener" aria-label="GitHub">
@@ -55,22 +61,27 @@
           </a></li>
         </ul>
       </div>
-      <div class="hero-media">
+      <div class="hero-media reveal" data-reveal-delay="150">
         <div class="hero-photo-frame">
           <img src="images/hero.jpg" alt="Portrait of Daniel, Heisdanito" class="hero-photo">
+          <div class="hero-photo-glow"></div>
         </div>
+        <div class="hero-badge hero-badge-1">Available for work</div>
+        <div class="hero-badge hero-badge-2">6+ projects shipped</div>
       </div>
     </div>
+    <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
   </section>
 
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="container about-grid">
-      <div class="about-media">
+      <div class="about-media reveal">
         <img src="images/about.jpg" alt="Daniel outdoors, casual portrait" class="about-photo">
+        <div class="about-frame"></div>
       </div>
-      <div class="about-text">
-        <p class="section-label">About</p>
+      <div class="about-text reveal" data-reveal-delay="120">
+        <p class="section-label"><span class="section-num">01</span>About</p>
         <h2>A bit about me</h2>
         <p>I'm Daniel — most people know me online as Heisdanito. I'm a frontend developer currently studying at the University of Education, Winneba (UEW), Ghana, and I spend most of my time building web and mobile products with React, PHP, MySQL and Node.js.</p>
         <p>What I enjoy most is taking a rough idea — a school that needs a way to run elections online, a restaurant that needs an ordering system — and turning it into something people can actually open and use. I care about the small details: layout, spacing, and how a page feels to click through, not just whether it works.</p>
@@ -96,35 +107,35 @@
   <!-- SKILLS -->
   <section class="skills" id="skills">
     <div class="container">
-      <p class="section-label center">Skills</p>
-      <h2 class="center">Tools I work with</h2>
+      <p class="section-label center reveal"><span class="section-num">02</span>Skills</p>
+      <h2 class="center reveal">Tools I work with</h2>
       <div class="skills-grid">
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="0">
           <span class="skill-icon">⚛</span>
           <span class="skill-name">React</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="60">
           <span class="skill-icon">🐘</span>
           <span class="skill-name">PHP</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="120">
           <span class="skill-icon">▲</span>
           <span class="skill-name">HTML5</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="180">
           <span class="skill-icon">❖</span>
           <span class="skill-name">CSS3</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="240">
           <span class="skill-icon">🗄</span>
           <span class="skill-name">MySQL</span>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal" data-reveal-delay="300">
           <span class="skill-icon">⬢</span>
           <span class="skill-name">Node.js</span>
         </div>
       </div>
-      <div class="skills-extra">
+      <div class="skills-extra reveal">
         <span class="pill">Graphic Design</span>
         <span class="pill">Video Editing</span>
         <span class="pill">UI/UX</span>
@@ -136,12 +147,12 @@
   <!-- PROJECTS -->
   <section class="projects" id="projects">
     <div class="container">
-      <p class="section-label center">Projects</p>
-      <h2 class="center">Things I've built</h2>
+      <p class="section-label center reveal"><span class="section-num">03</span>Projects</p>
+      <h2 class="center reveal">Things I've built</h2>
       <div class="projects-grid">
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="SE">
+        <article class="project-card reveal" data-reveal-delay="0">
+          <div class="project-thumb">
             <span>SE</span>
           </div>
           <div class="project-body">
@@ -151,14 +162,14 @@
               <span>PHP</span><span>MySQL</span><span>JavaScript</span>
             </div>
             <div class="project-links">
-              <a href="http://hesshub.infinityfreeapp.com/voting/" target="_blank" rel="noopener">Live Demo →</a>
-              <a href="https://github.com/Heisdanito/school-e-votting" target="_blank" rel="noopener">GitHub →</a>
+              <a href="http://hesshub.infinityfreeapp.com/voting/" target="_blank" rel="noopener">Live Demo <i>→</i></a>
+              <a href="https://github.com/Heisdanito/school-e-votting" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="CR">
+        <article class="project-card reveal" data-reveal-delay="60">
+          <div class="project-thumb">
             <span>CR</span>
           </div>
           <div class="project-body">
@@ -168,13 +179,13 @@
               <span>PHP</span><span>MySQL</span><span>HTML/CSS</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/Heisdanito/champion-restaurant-0098" target="_blank" rel="noopener">GitHub →</a>
+              <a href="https://github.com/Heisdanito/champion-restaurant-0098" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="IN">
+        <article class="project-card reveal" data-reveal-delay="120">
+          <div class="project-thumb">
             <span>IN</span>
           </div>
           <div class="project-body">
@@ -184,13 +195,13 @@
               <span>React Native</span><span>React</span><span>Node.js</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/Heisdanito/infoctess" target="_blank" rel="noopener">GitHub →</a>
+              <a href="https://github.com/Heisdanito/infoctess" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="WM">
+        <article class="project-card reveal" data-reveal-delay="0">
+          <div class="project-thumb">
             <span>WM</span>
           </div>
           <div class="project-body">
@@ -200,14 +211,14 @@
               <span>React</span><span>Node.js</span>
             </div>
             <div class="project-links">
-              <a href="https://heis-host-2.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Live Demo →</a>
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+              <a href="https://heis-host-2.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Live Demo <i>→</i></a>
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="SM">
+        <article class="project-card reveal" data-reveal-delay="60">
+          <div class="project-thumb">
             <span>SM</span>
           </div>
           <div class="project-body">
@@ -217,13 +228,13 @@
               <span>PHP</span><span>MySQL</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
 
-        <article class="project-card">
-          <div class="project-thumb" data-initial="SO">
+        <article class="project-card reveal" data-reveal-delay="120">
+          <div class="project-thumb">
             <span>SO</span>
           </div>
           <div class="project-body">
@@ -233,7 +244,7 @@
               <span>UI/UX</span><span>React</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
             </div>
           </div>
         </article>
@@ -245,10 +256,10 @@
   <!-- EXPERIENCE -->
   <section class="experience" id="experience">
     <div class="container">
-      <p class="section-label center">Experience</p>
-      <h2 class="center">Where I've grown</h2>
+      <p class="section-label center reveal"><span class="section-num">04</span>Experience</p>
+      <h2 class="center reveal">Where I've grown</h2>
       <div class="timeline">
-        <div class="timeline-item">
+        <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <span class="timeline-date">Present</span>
@@ -256,7 +267,7 @@
             <p>Studying while building and shipping independent web and mobile projects — from school systems to e-commerce and voting platforms.</p>
           </div>
         </div>
-        <div class="timeline-item">
+        <div class="timeline-item reveal" data-reveal-delay="150">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <span class="timeline-date">Ongoing</span>
@@ -271,8 +282,8 @@
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="container contact-grid">
-      <div class="contact-text">
-        <p class="section-label">Contact</p>
+      <div class="contact-text reveal">
+        <p class="section-label"><span class="section-num">05</span>Contact</p>
         <h2>Let's work together</h2>
         <p>Have a project in mind or just want to say hello? My inbox is open.</p>
         <ul class="contact-list">
@@ -282,7 +293,7 @@
           <li><span>X</span><a href="https://x.com/heisdanito" target="_blank" rel="noopener">@heisdanito</a></li>
         </ul>
       </div>
-      <form class="contact-form" id="contactForm">
+      <form class="contact-form reveal" id="contactForm" data-reveal-delay="120">
         <label>
           Name
           <input type="text" name="name" required>
@@ -295,7 +306,7 @@
           Message
           <textarea name="message" rows="5" required></textarea>
         </label>
-        <button type="submit" class="btn btn-primary">Send Message</button>
+        <button type="submit" class="btn btn-primary"><span>Send Message</span></button>
       </form>
     </div>
   </section>
