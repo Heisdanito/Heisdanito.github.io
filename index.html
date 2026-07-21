@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heisdanito — Frontend Developer</title>
+<meta name="description" content="Portfolio of Heisdanito, a frontend developer building clean, functional interfaces with React, PHP and MySQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <nav class="nav container">
+    <a href="#top" class="logo">Heisdanito</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Hello, I'm</p>
+        <h1>Daniel <span>“Heisdanito”</span></h1>
+        <p class="hero-role">Frontend Developer</p>
+        <p class="hero-tagline">I build clean, functional interfaces with React, PHP and MySQL — turning rough ideas into products people can actually use.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        </div>
+        <ul class="hero-social">
+          <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.57.11.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.8 1.18 1.83 1.18 3.09 0 4.43-2.69 5.4-5.26 5.69.42.36.78 1.07.78 2.15v3.19c0 .31.2.67.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+          </a></li>
+          <li><a href="https://x.com/heisdanito" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M18.24 2H21l-6.55 7.49L22.5 22h-6.9l-5.4-7.06L3.9 22H1.14l7.02-8.02L1 2h7.06l4.88 6.46L18.24 2Zm-1.2 18.2h1.52L7.02 3.72H5.4L17.04 20.2Z"/></svg>
+          </a></li>
+          <li><a href="mailto:hesidanito@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M2 5h20a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm19.4 2.6-8.9 6.5a1 1 0 0 1-1 0L2.6 7.6"/></svg>
+          </a></li>
+        </ul>
+      </div>
+      <div class="hero-media">
+        <div class="hero-photo-frame">
+          <img src="images/hero.jpg" alt="Portrait of Daniel, Heisdanito" class="hero-photo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-media">
+        <img src="images/about.jpg" alt="Daniel outdoors, casual portrait" class="about-photo">
+      </div>
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2>A bit about me</h2>
+        <p>I'm Daniel — most people know me online as Heisdanito. I'm a frontend developer currently studying at the University of Education, Winneba (UEW), Ghana, and I spend most of my time building web and mobile products with React, PHP, MySQL and Node.js.</p>
+        <p>What I enjoy most is taking a rough idea — a school that needs a way to run elections online, a restaurant that needs an ordering system — and turning it into something people can actually open and use. I care about the small details: layout, spacing, and how a page feels to click through, not just whether it works.</p>
+        <p>Outside of development, I also do graphic design and video editing, so I tend to think about a project's visuals as much as its code.</p>
+        <div class="about-meta">
+          <div>
+            <span class="meta-label">Location</span>
+            <span class="meta-value">Ghana</span>
+          </div>
+          <div>
+            <span class="meta-label">Education</span>
+            <span class="meta-value">University of Education, Winneba</span>
+          </div>
+          <div>
+            <span class="meta-label">Email</span>
+            <span class="meta-value"><a href="mailto:hesidanito@gmail.com">hesidanito@gmail.com</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <p class="section-label center">Skills</p>
+      <h2 class="center">Tools I work with</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <span class="skill-icon">⚛</span>
+          <span class="skill-name">React</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🐘</span>
+          <span class="skill-name">PHP</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">▲</span>
+          <span class="skill-name">HTML5</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">❖</span>
+          <span class="skill-name">CSS3</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🗄</span>
+          <span class="skill-name">MySQL</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⬢</span>
+          <span class="skill-name">Node.js</span>
+        </div>
+      </div>
+      <div class="skills-extra">
+        <span class="pill">Graphic Design</span>
+        <span class="pill">Video Editing</span>
+        <span class="pill">UI/UX</span>
+        <span class="pill">React Native (Expo)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <p class="section-label center">Projects</p>
+      <h2 class="center">Things I've built</h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="SE">
+            <span>SE</span>
+          </div>
+          <div class="project-body">
+            <h3>Sahess E-Voting System</h3>
+            <p>A secure online election platform built for Sacred Heart School — student authentication, ballot management, encrypted vote storage and instant results.</p>
+            <div class="project-tags">
+              <span>PHP</span><span>MySQL</span><span>JavaScript</span>
+            </div>
+            <div class="project-links">
+              <a href="http://hesshub.infinityfreeapp.com/voting/" target="_blank" rel="noopener">Live Demo →</a>
+              <a href="https://github.com/Heisdanito/school-e-votting" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="CR">
+            <span>CR</span>
+          </div>
+          <div class="project-body">
+            <h3>Champion Restaurant</h3>
+            <p>An online food ordering system in the style of a fast-food chain — browse the menu, build an order and check out.</p>
+            <div class="project-tags">
+              <span>PHP</span><span>MySQL</span><span>HTML/CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Heisdanito/champion-restaurant-0098" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="IN">
+            <span>IN</span>
+          </div>
+          <div class="project-body">
+            <h3>Infoctess — Attendance System</h3>
+            <p>A mobile and web attendance-marking system for tracking check-ins in real time, with a React Native (Expo) app and a companion web dashboard.</p>
+            <div class="project-tags">
+              <span>React Native</span><span>React</span><span>Node.js</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Heisdanito/infoctess" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="WM">
+            <span>WM</span>
+          </div>
+          <div class="project-body">
+            <h3>Water Management System</h3>
+            <p>A web platform for monitoring and managing water usage and distribution.</p>
+            <div class="project-tags">
+              <span>React</span><span>Node.js</span>
+            </div>
+            <div class="project-links">
+              <a href="https://heis-host-2.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Live Demo →</a>
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="SM">
+            <span>SM</span>
+          </div>
+          <div class="project-body">
+            <h3>School Management System</h3>
+            <p>A PHP-based school management system covering admissions, classes, teachers and student records.</p>
+            <div class="project-tags">
+              <span>PHP</span><span>MySQL</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb" data-initial="SO">
+            <span>SO</span>
+          </div>
+          <div class="project-body">
+            <h3>Socialmate</h3>
+            <p>A social networking concept platform, designed with a strong focus on clean UI/UX.</p>
+            <div class="project-tags">
+              <span>UI/UX</span><span>React</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="experience" id="experience">
+    <div class="container">
+      <p class="section-label center">Experience</p>
+      <h2 class="center">Where I've grown</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Present</span>
+            <h3>University of Education, Winneba (UEW)</h3>
+            <p>Studying while building and shipping independent web and mobile projects — from school systems to e-commerce and voting platforms.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date">Ongoing</span>
+            <h3>Independent Developer &amp; Designer</h3>
+            <p>Designing and building full-stack projects end to end — PHP/MySQL backends, React front ends, and the graphic design and video work that goes with them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <div class="contact-text">
+        <p class="section-label">Contact</p>
+        <h2>Let's work together</h2>
+        <p>Have a project in mind or just want to say hello? My inbox is open.</p>
+        <ul class="contact-list">
+          <li><span>Email</span><a href="mailto:hesidanito@gmail.com">hesidanito@gmail.com</a></li>
+          <li><span>Phone</span><a href="tel:+233538327598">+233 53 832 7598</a></li>
+          <li><span>GitHub</span><a href="https://github.com/Heisdanito" target="_blank" rel="noopener">github.com/Heisdanito</a></li>
+          <li><span>X</span><a href="https://x.com/heisdanito" target="_blank" rel="noopener">@heisdanito</a></li>
+        </ul>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <label>
+          Name
+          <input type="text" name="name" required>
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required>
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="year"></span> Daniel · Heisdanito. All rights reserved.</p>
+    <ul class="footer-social">
+      <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://x.com/heisdanito" target="_blank" rel="noopener">X</a></li>
+      <li><a href="mailto:hesidanito@gmail.com">Email</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- AI CHAT WIDGET -->
+<div class="ai-chat" id="aiChat">
+  <button class="ai-chat-toggle" id="aiChatToggle" aria-label="Ask about Daniel">
+    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H8l-4.7 3.76A.5.5 0 0 1 2.5 20.5V5a1 1 0 0 1 1-1Z"/></svg>
+  </button>
+  <div class="ai-chat-panel" id="aiChatPanel">
+    <div class="ai-chat-header">
+      <div>
+        <strong>Ask about Daniel</strong>
+        <span>Ask me anything about his work, skills or how to reach him</span>
+      </div>
+      <button class="ai-chat-close" id="aiChatClose" aria-label="Close chat">&times;</button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+      <div class="ai-msg ai-msg-bot">Hi! I can answer questions about Daniel (Heisdanito) — his projects, skills, or how to contact him. What would you like to know?</div>
+    </div>
+    <form class="ai-chat-input" id="aiChatForm">
+      <input type="text" id="aiChatInput" placeholder="Type a question…" autocomplete="off" required>
+      <button type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M2 21 23 12 2 3v7l15 2-15 2v7Z"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
