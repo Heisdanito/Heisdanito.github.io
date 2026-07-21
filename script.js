@@ -40,6 +40,18 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 revealEls.forEach(el => revealObserver.observe(el));
 
+// Animate resume skill bars when scrolled into view
+const skillBars = document.querySelectorAll('.skill-bar');
+const skillBarObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      skillBarObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+skillBars.forEach(el => skillBarObserver.observe(el));
+
 // Active nav link on scroll
 const sections = document.querySelectorAll('main section[id], header#top');
 const navAnchors = document.querySelectorAll('.nav-links a[data-nav]');
