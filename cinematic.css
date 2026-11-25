@@ -917,3 +917,241 @@ a.store-badge:hover { transform: translateY(-2px); border-color: var(--reel-acce
 @media (max-width: 860px) {
   .exp-list li { grid-template-columns: 1fr; gap: 6px; }
 }
+
+/* ==========================================================================
+   Pass 5 — animated logo, About photo deck
+   ========================================================================== */
+
+/* ---------- Logo: rolling letters, sans + serif italic ---------- */
+.logo { align-items: baseline; gap: .2em; font-size: 1.32rem; }
+.logo .logo-word {
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.2;
+  padding: 0 .03em .08em;
+  color: var(--ink);
+}
+.logo .logo-word.sans { font-family: var(--font-head); font-weight: 700; letter-spacing: -.035em; }
+.logo .logo-word.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.2em;
+  letter-spacing: 0;
+  color: var(--accent-live);
+  transition: color .6s var(--ease);
+}
+.logo .lc {
+  display: inline-block;
+  color: inherit;
+  text-shadow: 0 1.25em currentColor;
+  transform: translateY(1.25em);
+  transition: transform .75s cubic-bezier(.7, 0, .2, 1);
+  transition-delay: calc(var(--i) * 38ms);
+}
+.logo.is-in .lc { transform: translateY(0); }
+.logo.is-in:hover .lc,
+.logo.is-in.is-rolling .lc { transform: translateY(-1.25em); }
+.logo-dot {
+  align-self: center;
+  width: 7px; height: 7px;
+  background: var(--accent-live);
+  animation: logoDot 2.4s var(--ease) infinite;
+}
+@keyframes logoDot {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-live) 60%, transparent); }
+  50% { transform: scale(1.25); box-shadow: 0 0 0 7px transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo .lc { transform: none !important; transition: none; }
+  .logo-dot { animation: none; }
+}
+
+/* ---------- About: photo deck ---------- */
+.photo-deck {
+  position: relative;
+  width: min(290px, 62%);
+  aspect-ratio: 4 / 5;
+  margin: 0 auto 90px;
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .5s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.deck-card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 7px solid #f3f0e8;
+  background: #f3f0e8;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .7), 0 2px 0 rgba(0, 0, 0, .05);
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(26%) rotate(var(--r, 0deg)) scale(.9);
+  transition:
+    transform 1.05s cubic-bezier(.2, .9, .25, 1.12),
+    opacity .7s var(--ease),
+    filter .6s var(--ease);
+  outline: none;
+}
+.deck-card:nth-child(1) { --r: -4deg; }
+.deck-card:nth-child(2) { --r: 3deg; }
+.deck-card:nth-child(3) { --r: 7deg; }
+.deck-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.deck-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.deck-card:focus-visible { box-shadow: 0 0 0 3px var(--accent-live), 0 30px 60px -24px rgba(0, 0, 0, .7); }
+
+/* Dealt: front card centred, the other two bent out to either side */
+.photo-deck.is-dealt .deck-card { opacity: 1; }
+.photo-deck.is-dealt .is-front { transform: translateY(0) rotate(0deg) scale(1); z-index: 3; }
+.photo-deck.is-dealt .is-left {
+  transform: translateX(-30%) rotate(-10deg) scale(.88);
+  z-index: 2;
+  filter: brightness(.72) saturate(.85);
+  transition-delay: .09s;
+}
+.photo-deck.is-dealt .is-right {
+  transform: translateX(30%) rotate(10deg) scale(.88);
+  z-index: 1;
+  filter: brightness(.72) saturate(.85);
+  transition-delay: .18s;
+}
+.photo-deck.is-dealt:hover .is-left { transform: translateX(-40%) rotate(-14deg) scale(.9); filter: brightness(.9); }
+.photo-deck.is-dealt:hover .is-right { transform: translateX(40%) rotate(14deg) scale(.9); filter: brightness(.9); }
+.photo-deck.is-dealt .is-front { transition-delay: 0s; }
+
+/* Brought forward: the photo settles in with a quick zoom and a light sweep */
+.deck-card.is-pop img { animation: deckZoom 1s cubic-bezier(.2, .9, .25, 1) both; }
+.deck-card.is-pop::after { animation: deckShine 1s .15s var(--ease) both; }
+@keyframes deckZoom { from { transform: scale(1.18); } to { transform: scale(1); } }
+@keyframes deckShine { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+
+.deck-caption {
+  position: absolute;
+  left: 50%;
+  bottom: -64px;
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
+  text-align: center;
+}
+.deck-caption span { display: block; font-family: var(--font-serif); font-style: italic; font-size: 1.5rem; color: var(--ink); line-height: 1.1; }
+.deck-caption small { font-size: .72rem; color: var(--muted-soft); letter-spacing: .04em; }
+
+@media (max-width: 860px) {
+  .photo-deck { width: min(260px, 58%); max-width: none; margin: 10px auto 96px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-card { transition: none; }
+  .deck-card.is-pop img, .deck-card.is-pop::after { animation: none; }
+}
+
+/* ==========================================================================
+   Pass 6 — viral-style effects: cursor image trail, stacked experience
+   cards, magnetic buttons, giant outro name
+   ========================================================================== */
+
+/* ---------- Hero image trail ---------- */
+.hero-trail { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.hero-trail img {
+  position: absolute;
+  top: 0; left: 0;
+  width: clamp(160px, 16vw, 260px);
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .7);
+  will-change: transform, opacity;
+}
+.cine-hero .hero-stage, .cine-hero .hero-foot, .cine-hero .hero-kicker, .cine-hero .hero-social { position: relative; z-index: 2; }
+
+/* ---------- Experience: cards stack as you scroll ---------- */
+.exp-list { border-top: 0; display: grid; gap: 18px; }
+.exp-list li {
+  position: sticky;
+  top: calc(96px + var(--n, 0) * 14px);
+  padding: 34px 34px;
+  border: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--bg) 88%, var(--ink) 12%);
+  box-shadow: 0 -20px 50px -30px rgba(0, 0, 0, .6);
+  transform-origin: 50% 0;
+  min-height: 190px;
+}
+:root[data-theme="light"] .exp-list li { background: #fbfaf6; box-shadow: 0 -20px 50px -34px rgba(60, 40, 20, .35); }
+.exp-list li:nth-child(1) { --n: 0; }
+.exp-list li:nth-child(2) { --n: 1; }
+.exp-list li:nth-child(3) { --n: 2; }
+.exp-list li:nth-child(4) { --n: 3; }
+.exp-list li:nth-child(5) { --n: 4; }
+.exp-when {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--accent-live);
+}
+.exp-list h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+@media (max-width: 860px) {
+  .exp-list li { padding: 26px 22px; top: calc(84px + var(--n, 0) * 10px); }
+}
+
+/* ---------- Outro ---------- */
+.outro { position: relative; z-index: 1; padding: 120px 0 0; overflow: hidden; }
+.outro-inner { display: flex; justify-content: space-between; align-items: end; gap: 30px; flex-wrap: wrap; }
+.outro-kicker {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+.outro-kicker em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--accent-live); }
+.outro-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 34px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  letter-spacing: -.01em;
+}
+.outro-cta i { font-style: normal; transition: transform .4s var(--ease); }
+.outro-cta:hover i { transform: translate(4px, -4px) rotate(8deg); }
+.outro-name {
+  margin-top: 60px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 17.6vw;
+  line-height: .78;
+  letter-spacing: -.06em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--ink);
+  overflow: hidden;
+  padding-bottom: .02em;
+  user-select: none;
+}
+.outro-name .oc { display: inline-block; }
+
+/* Magnetic elements move as a whole */
+.magnetic, .btn, .theme-toggle, .wa-float { will-change: transform; }
+.exp-list li { grid-template-columns: 190px 1fr 1.3fr; }
+@media (max-width: 860px) { .exp-list li { grid-template-columns: 1fr; } }

@@ -234,3 +234,111 @@ aiChatForm.addEventListener('submit', async (e) => {
     aiChatInput.focus();
   }
 });
+
+// ---- Animated logo: letters roll over on hover and every few seconds ----
+(() => {
+  const logo = document.querySelector('.logo');
+  if (!logo) return;
+  let i = 0;
+  logo.querySelectorAll('.logo-word').forEach((word) => {
+    const text = word.textContent;
+    word.textContent = '';
+    for (const ch of text) {
+      const s = document.createElement('span');
+      s.className = 'lc';
+      s.style.setProperty('--i', i++);
+      s.textContent = ch;
+      word.appendChild(s);
+    }
+  });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Intro once the page has loaded, then a roll every 6 seconds
+  requestAnimationFrame(() => logo.classList.add('is-in'));
+  setInterval(() => {
+    if (logo.matches(':hover')) return;
+    logo.classList.add('is-rolling');
+    setTimeout(() => logo.classList.remove('is-rolling'), 1100);
+  }, 6000);
+})();
+
+// ---- About: a deck of photos. One random photo lands on top, the others
+// fan out behind it like a hand of cards. Select one to bring it forward. ----
+(() => {
+  const deck = document.getElementById('photoDeck');
+  if (!deck) return;
+  const cards = Array.from(deck.querySelectorAll('.deck-card'));
+  const caption = document.getElementById('deckCaption');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // order[0] is the front card; order[1] fans left, order[2] fans right
+  let order = cards.map((_, i) => i);
+  const front = Math.floor(Math.random() * cards.length);
+  order = [front, ...order.filter((i) => i !== front)];
+
+  const layout = () => {
+    const slots = ['is-front', 'is-left', 'is-right'];
+    order.forEach((cardIndex, slot) => {
+      const c = cards[cardIndex];
+      c.classList.remove('is-front', 'is-left', 'is-right');
+      c.classList.add(slots[slot] || 'is-right');
+      c.setAttribute('aria-current', slot === 0 ? 'true' : 'false');
+    });
+    caption.textContent = cards[order[0]].dataset.caption;
+  };
+
+  const bringForward = (cardIndex) => {
+    if (order[0] === cardIndex) return;
+    const card = cards[cardIndex];
+    // The old front card slides into the slot the chosen card leaves
+    const slot = order.indexOf(cardIndex);
+    order[slot] = order[0];
+    order[0] = cardIndex;
+    card.classList.remove('is-pop');
+    void card.offsetWidth;
+    card.classList.add('is-pop');
+    layout();
+  };
+
+  cards.forEach((c, i) => {
+    c.addEventListener('click', () => { bringForward(i); restartAuto(); });
+    c.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bringForward(i); restartAuto(); }
+    });
+  });
+
+  // Gentle tilt toward the pointer
+  if (!reduce) {
+    deck.addEventListener('pointermove', (e) => {
+      const r = deck.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      deck.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
+      deck.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+    });
+    deck.addEventListener('pointerleave', () => {
+      deck.style.setProperty('--ry', '0deg');
+      deck.style.setProperty('--rx', '0deg');
+    });
+  }
+
+  // Cycle through the photos while the deck is on screen
+  let timer = null;
+  let visible = false;
+  const next = () => bringForward(order[1]);
+  function restartAuto() {
+    clearInterval(timer);
+    if (visible && !reduce) timer = setInterval(next, 4200);
+  }
+
+  layout();
+  if (reduce) { deck.classList.add('is-dealt'); return; }
+  new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      visible = entry.isIntersecting;
+      if (visible && !deck.classList.contains('is-dealt')) {
+        // Deal: the pile sits stacked, then bends out into a fan
+        setTimeout(() => deck.classList.add('is-dealt'), 250);
+      }
+      restartAuto();
+    });
+  }, { threshold: 0.35 }).observe(deck);
+})();

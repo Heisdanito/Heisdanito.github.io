@@ -18,8 +18,8 @@
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
-<link rel="stylesheet" href="styles.css?v=20261125d">
-<link rel="stylesheet" href="cinematic.css?v=20261125d">
+<link rel="stylesheet" href="styles.css?v=20261125f">
+<link rel="stylesheet" href="cinematic.css?v=20261125f">
 <script>
   // Turn on the cinematic layer before first paint, unless the visitor prefers reduced motion.
   // Safety net: if the animation scripts never load, drop the preloader after 6s.
@@ -49,7 +49,7 @@
 
 <header class="site-header" id="top">
   <nav class="nav container">
-    <a href="#top" class="logo">Heis<span>danito</span><i class="logo-dot"></i></a>
+    <a href="#top" class="logo" aria-label="Heisdanito, back to top"><span class="logo-word sans" aria-hidden="true">Heis</span><span class="logo-word serif" aria-hidden="true">danito</span><i class="logo-dot"></i></a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -57,7 +57,6 @@
       <li><a href="#top" data-nav="top">Home</a></li>
       <li><a href="#about" data-nav="about">About</a></li>
       <li><a href="#skills" data-nav="skills">Stack</a></li>
-      <li><a href="#gallery" data-nav="gallery">Gallery</a></li>
       <li><a href="#projects" data-nav="projects">Work</a></li>
       <li><a href="#resume" data-nav="resume">Experience</a></li>
       <li class="theme-item"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark theme">
@@ -73,6 +72,7 @@
 
   <!-- HERO: opening shot -->
   <section class="hero cine-hero">
+    <div class="hero-trail" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-kicker"><span class="rec">Now playing — Portfolio ’26</span><span>Winneba, Ghana · HeisDev</span></div>
       <div class="hero-stage">
@@ -147,9 +147,11 @@
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="container about-grid">
-      <div class="about-media reveal">
-        <img src="images/about.jpg" alt="Daniel outdoors, casual portrait" class="about-photo">
-        <div class="about-frame"></div>
+      <div class="about-media photo-deck" id="photoDeck" role="group" aria-label="Photos of Daniel. Select a photo to bring it to the front.">
+        <figure class="deck-card" data-caption="On campus" tabindex="0"><img src="images/about.jpg" alt="Daniel outdoors on campus"></figure>
+        <figure class="deck-card" data-caption="Casual" tabindex="0"><img src="images/gallery-1.jpg" alt="Daniel in a white shirt and glasses, casual portrait"></figure>
+        <figure class="deck-card" data-caption="Professional" tabindex="0"><img src="images/gallery-2.jpg" alt="Daniel in a dark suit, professional portrait"></figure>
+        <p class="deck-caption" aria-live="polite"><span id="deckCaption">On campus</span><small>Tap a photo</small></p>
       </div>
       <div class="about-text reveal" data-reveal-delay="120">
         <p class="section-label"><span class="section-num">01</span>About</p>
@@ -238,28 +240,6 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section class="gallery" id="gallery">
-    <div class="container">
-      <p class="section-label center reveal"><span class="section-num">03</span>Gallery</p>
-      <h2 class="center reveal">A few photos of me</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item reveal" data-reveal-delay="0">
-          <img src="images/gallery-1.jpg" alt="Daniel, casual portrait" loading="lazy">
-          <div class="gallery-caption">Casual</div>
-        </div>
-        <div class="gallery-item reveal" data-reveal-delay="80">
-          <img src="images/gallery-2.jpg" alt="Daniel in a suit, professional portrait" loading="lazy">
-          <div class="gallery-caption">Professional</div>
-        </div>
-        <div class="gallery-item reveal" data-reveal-delay="160">
-          <img src="images/gallery-3.jpg" alt="Daniel outdoors on campus" loading="lazy">
-          <div class="gallery-caption">On campus</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- PROJECTS: cinematic reel -->
   <section class="reel-section" id="projects">
     <div class="container reel-head">
@@ -269,7 +249,7 @@
       </div>
       <div>
         <p>15 products, opening with work built for a restaurant, a school, a university and a live social network. Each scene comes with a caption saying what you’re looking at.</p>
-        <p class="reel-note">Champions, SAHESS, UEW and SocialMate scenes use the clients’ real photos and logos. The other scenes are illustrated with sample data, except LocalBite, which uses a real app screenshot.</p>
+        <p class="reel-note">Champions, SAHESS, UEW and SocialMate scenes use the clients’ real photos and logos. The other scenes are illustrated with sample data, except LocalBite, which uses a real app screenshot, and HEIS-SMS, which is a photo of the live system.</p>
       </div>
     </div>
     <div class="reel-pin">
@@ -355,9 +335,9 @@
         <article class="reel-slide" style="--reel-accent:#6d8bff">
           <figure class="reel-figure">
             <div class="reel-frame">
-              <img src="images/projects/heis-sms.webp" alt="HEIS-SMS admin dashboard for a school, with stats, a fee chart, AI evaluation bars and a list of schools" width="1600" height="1000" loading="lazy" decoding="async">
+              <img src="images/projects/heis-sms-photo.webp" alt="Photo of the HEIS-SMS sign-in page running on a monitor and a laptop" width="1600" height="1000" loading="lazy" decoding="async">
             </div>
-            <figcaption><b>SC.05</b><span>The admin dashboard for one school. It shows the student count, attendance rate, fees collected, a monthly fee-collection chart and AI evaluation scores per student. The floating panel lists the other schools running on the same deployment.</span></figcaption>
+            <figcaption><b>SC.05</b><span>A photo of the live HEIS-SMS sign-in page on a monitor, with the light-theme version on the laptop below. People sign in with their school’s portal code, so every school gets its own space on the same deployment.</span></figcaption>
           </figure>
           <div class="reel-info">
             <span class="reel-index">05 / 15</span>
@@ -578,11 +558,11 @@
       <p class="section-label reveal"><span class="section-num">05</span>Experience</p>
       <h2 class="experience-title reveal">Where the work happens</h2>
       <ol class="exp-list">
-        <li class="reveal"><span class="exp-when">Now</span><div><h3>HeisDev</h3><p class="exp-role">Independent developer and designer</p></div><p class="exp-desc">Designing, building and shipping products end to end: SocialMate and LocalBite are live, alongside work for the clients below.</p></li>
-        <li class="reveal"><span class="exp-when">Client</span><div><h3>Champions Chicken, Berekum</h3><p class="exp-role">Restaurant web platform</p></div><p class="exp-desc">Ordering, reservations and the order workflow for a working restaurant, plus a security rebuild of the site it inherited.</p></li>
-        <li class="reveal"><span class="exp-when">Client</span><div><h3>UEW Library</h3><p class="exp-role">Visitor tracking system</p></div><p class="exp-desc">Phone and desk recording, live visitor counts and exportable reports for the university library.</p></li>
-        <li class="reveal"><span class="exp-when">Client</span><div><h3>SAHESS</h3><p class="exp-role">School e-voting</p></div><p class="exp-desc">Student council elections with voter import, one vote per student and live results.</p></li>
-        <li class="reveal"><span class="exp-when">Study</span><div><h3>University of Education, Winneba</h3><p class="exp-role">Student</p></div><p class="exp-desc">Studying at UEW while building most of the projects on this page.</p></li>
+        <li><span class="exp-when">Now</span><div><h3>HeisDev</h3><p class="exp-role">Independent developer and designer</p></div><p class="exp-desc">Designing, building and shipping products end to end: SocialMate and LocalBite are live, alongside work for the clients below.</p></li>
+        <li><span class="exp-when">Client</span><div><h3>Champions Chicken, Berekum</h3><p class="exp-role">Restaurant web platform</p></div><p class="exp-desc">Ordering, reservations and the order workflow for a working restaurant, plus a security rebuild of the site it inherited.</p></li>
+        <li><span class="exp-when">Client</span><div><h3>UEW Library</h3><p class="exp-role">Visitor tracking system</p></div><p class="exp-desc">Phone and desk recording, live visitor counts and exportable reports for the university library.</p></li>
+        <li><span class="exp-when">Client</span><div><h3>SAHESS</h3><p class="exp-role">School e-voting</p></div><p class="exp-desc">Student council elections with voter import, one vote per student and live results.</p></li>
+        <li><span class="exp-when">Study</span><div><h3>University of Education, Winneba</h3><p class="exp-role">Student</p></div><p class="exp-desc">Studying at UEW while building most of the projects on this page.</p></li>
       </ol>
       <p class="exp-cv reveal">The full CV, with education and references, is a <a href="resume.pdf" download>PDF download</a>.</p>
     </div>
@@ -635,6 +615,14 @@
 
 </main>
 
+<section class="outro" aria-label="Get in touch">
+  <div class="container outro-inner">
+    <p class="outro-kicker">Have something people should be able to <em>use</em>?</p>
+    <a class="outro-cta magnetic" href="https://wa.me/233538327598?text=Hi%20Daniel%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener"><span>Let’s build it</span><i aria-hidden="true">↗</i></a>
+  </div>
+  <div class="outro-name" aria-hidden="true">HEISDANITO</div>
+</section>
+
 <footer class="site-footer">
   <div class="container footer-inner">
     <p>&copy; <span id="year"></span> Daniel · Heisdanito. All rights reserved.</p>
@@ -679,8 +667,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="particles.js?v=20261125d"></script>
-<script src="script.js?v=20261125d"></script>
-<script src="cinematic.js?v=20261125d"></script>
+<script src="particles.js?v=20261125f"></script>
+<script src="script.js?v=20261125f"></script>
+<script src="cinematic.js?v=20261125f"></script>
 </body>
 </html>

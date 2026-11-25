@@ -316,6 +316,99 @@
     });
   });
 
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // ---------- Hero: project images trail the cursor ----------
+  const trail = $('.hero-trail');
+  const hero = $('.cine-hero');
+  if (trail && hero && finePointer) {
+    const srcs = $$('.reel-frame img').map((i) => i.getAttribute('src'));
+    let idx = 0;
+    let last = { x: -999, y: -999 };
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      if (Math.hypot(x - last.x, y - last.y) < 120) return;
+      last = { x, y };
+      const img = new Image();
+      img.alt = '';
+      img.decoding = 'async';
+      img.src = srcs[idx++ % srcs.length];
+      trail.appendChild(img);
+      gsap.timeline({ onComplete: () => img.remove() })
+        .fromTo(img,
+          { x, y, xPercent: -50, yPercent: -50, scale: .35, autoAlpha: 0, rotate: gsap.utils.random(-14, 14) },
+          { scale: 1, autoAlpha: 1, duration: .5, ease: 'expo.out' })
+        .to(img, { y: y + 80, scale: .55, autoAlpha: 0, rotate: '+=8', duration: .9, ease: 'power3.in' }, '+=.3');
+    });
+  }
+
+  // ---------- Magnetic buttons ----------
+  if (finePointer) {
+    $$('.btn, .theme-toggle, .wa-float, .outro-cta, .nav-cta, .store-badge').forEach((el) => {
+      const xTo = gsap.quickTo(el, 'x', { duration: .6, ease: 'elastic.out(1, .4)' });
+      const yTo = gsap.quickTo(el, 'y', { duration: .6, ease: 'elastic.out(1, .4)' });
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        xTo((e.clientX - r.left - r.width / 2) * .35);
+        yTo((e.clientY - r.top - r.height / 2) * .35);
+      });
+      el.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
+    });
+  }
+
+  // ---------- Experience: each card shrinks back as the next one lands on it ----------
+  const exps = $$('.exp-list li');
+  exps.forEach((li, i) => {
+    if (i === exps.length - 1) return;
+    gsap.to(li, {
+      scale: .9 + i * .015,
+      filter: 'brightness(.7)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: exps[i + 1],
+        start: 'top bottom',
+        end: () => `top ${96 + (i + 1) * 14}px`,
+        scrub: true,
+      },
+    });
+  });
+
+  // ---------- Images skew with scroll speed ----------
+  const skewTargets = $$('.reel-frame');
+  if (skewTargets.length) {
+    const proxy = { skew: 0 };
+    const setSkew = gsap.quickSetter(skewTargets, 'skewX', 'deg');
+    const clamp = gsap.utils.clamp(-7, 7);
+    ScrollTrigger.create({
+      onUpdate(self) {
+        const skew = clamp(self.getVelocity() / -350);
+        if (Math.abs(skew) > Math.abs(proxy.skew)) {
+          proxy.skew = skew;
+          gsap.to(proxy, { skew: 0, duration: .8, ease: 'power3', overwrite: true, onUpdate: () => setSkew(proxy.skew) });
+        }
+      },
+    });
+  }
+
+  // ---------- Outro: the giant name rises letter by letter ----------
+  const outroName = $('.outro-name');
+  if (outroName) {
+    const chars = splitChars(outroName);
+    chars.forEach((c) => c.classList.add('oc'));
+    gsap.from(chars, {
+      yPercent: 110,
+      ease: 'expo.out',
+      stagger: .06,
+      scrollTrigger: { trigger: '.outro', start: 'top 70%', end: 'bottom bottom', scrub: 1 },
+    });
+    gsap.from('.outro-kicker, .outro-cta', {
+      y: 40, autoAlpha: 0, duration: 1, ease: 'expo.out', stagger: .12,
+      scrollTrigger: { trigger: '.outro', start: 'top 80%' },
+    });
+  }
+
   // ---------- Cursor ----------
   const cursor = $('.cine-cursor');
   if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
