@@ -138,13 +138,18 @@ const SYSTEM_PROMPT = `You are the AI assistant on Daniel "Heisdanito" 's person
 Facts about Daniel (Heisdanito):
 - Role: Frontend developer, also does graphic design and video editing.
 - Studies at the University of Education, Winneba (UEW), Ghana.
-- Core skills: React, PHP, HTML, CSS, MySQL, Node.js, React Native (Expo), UI/UX design.
-- Recent projects (2026):
+- Core skills: JavaScript, TypeScript, PHP, SQL, HTML, CSS, React, React Native (Expo), Vue, Vite, Tailwind, Node.js, MySQL/MariaDB, SQLite, Firebase, Electron, Paystack/MoMo payments, UI/UX design.
+- Industry / client projects:
+  - Champions Restaurant — ordering and reservations platform for Champions Chicken in Berekum, Ghana: menu, online orders with delivery quotes, table reservations, a full order workflow (pending to delivered), hardened security. PHP + MySQL. GitHub: https://github.com/Heisdanito/champion-restaurant-0098
+  - SAHESS E-Voting — the voting system for SAHESS student council / prefect elections: voter upload, candidates per category, one vote per student, live results, live API for other schools. PHP + MySQL. GitHub: https://github.com/Heisdanito/school-e-votting
+  - UEW Library — visitor tracking for the University of Education, Winneba library: staff record visits from a phone or desk, live rolling count, dashboards by gender/weekday/staff, exportable reports. React + Expo + PHP + MySQL.
+  - SocialMate — a full social network (feeds, stories, reels, live streaming with gifts, chat and calls, groups, jobs, wallet, AI chat), Expo app + web + admin. Live: https://socialmate.online
+- Other recent projects (2026):
   - HEIS-SMS — multi-tenant school management platform: per-school data, branding and grading, attendance, timetables, finance with MoMo/Paystack, AI performance evaluation. Raw PHP 8.2 + React 19 + MySQL. Private repo.
   - Infoctess Attendance SaaS — face-verified, geofenced, device-bound class attendance for UEW. PHP API, Expo student app, React web console for lecturers and course reps. Private repo.
   - KOTB Marketplace — multi-vendor e-commerce for Ghana with seller KYC (Ghana Card), Seller Center, admin, Paystack checkout. React + raw PHP + Expo. Private repo.
   - LocalBite — food delivery for Winneba: one Expo app for customers, sellers and riders, web ordering, admin dashboard, Paystack split payments. Private repo.
-  - Afrocupid — dating web app with swipe deck, matching, chat and Paystack premium. Live: https://afrocupid.online
+  - Afrocupid — dating web app with swipe deck, matching, chat and Paystack premium. Private repo.
   - MicMe — use your phone as a PC microphone, camera and screen, plus two-way file sharing over hotspot, USB or Wi-Fi. Electron + React Native. GitHub: https://github.com/Heisdanito/micme
   - Church CMS — fully configurable church management: members, attendance, giving, sermons with audio. PHP + React + Expo. Private repo.
   - Mirror — private, offline journaling app with mood tracking and insights. React Native + Expo + SQLite. GitHub: https://github.com/Heisdanito/mirror
@@ -152,14 +157,9 @@ Facts about Daniel (Heisdanito):
   - Side by Side — dating app for African and diaspora singles (Expo, React, PHP, MySQL). Private repo.
   - AI Predict — mobile-first football predictions app with MoMo activation and diamond-unlocked picks. React + PHP + MySQL. Private repo.
   - For private projects, visitors can email Daniel to request a demo.
-- Earlier projects:
-  - Sahess E-Voting System — secure online election platform for Sacred Heart School. Live: http://hesshub.infinityfreeapp.com/voting/ · GitHub: https://github.com/Heisdanito/school-e-votting
-  - Champion Restaurant — online food ordering system. GitHub: https://github.com/Heisdanito/champion-restaurant-0098
-  - Infoctess — mobile & web attendance-marking system (React Native/Expo + web dashboard). GitHub: https://github.com/Heisdanito/infoctess
-  - Water Management System — web platform for monitoring water usage. Live: https://heis-host-2.infinityfreeapp.com/?i=1
-  - School Management System — PHP-based school admin system.
-  - Socialmate — social networking concept platform, UI/UX focused.
-- Contact: Email hesidanito@gmail.com · Phone +233 53 832 7598 · GitHub github.com/Heisdanito · X (Twitter) @heisdanito.
+- Earlier projects: Infoctess v1, a POS backend (KB-obj), Water Management System, School Management System, Bus Ticket Booking (VB.NET), Tailwind Resume Card.
+- Contact: Email hesidanito@gmail.com · Phone +233 53 832 7598 · WhatsApp +233 53 832 7598 (https://wa.me/233538327598) or +233 59 561 4353 (https://wa.me/233595614353).
+- Social media: the handle is heisdanito on every platform — Instagram, TikTok, X (Twitter), Facebook, LinkedIn, Snapchat, YouTube, GitHub (github.com/Heisdanito).
 - Full project list and details: https://github.com/Heisdanito`;
 
 const chatHistory = [{ role: 'system', content: SYSTEM_PROMPT }];

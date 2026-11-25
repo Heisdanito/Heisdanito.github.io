@@ -556,3 +556,188 @@ html.cine .reel-glow { display: block; }
   .hero-scroll i { animation: none; }
   html:not(.cine) .marquee-track { animation: none; }
 }
+
+/* ==========================================================================
+   Pass 2 — clients strip, statement, stats, stack logos, socials, WhatsApp
+   ========================================================================== */
+
+/* ---------- Built for ---------- */
+.clients { position: relative; z-index: 1; padding: 70px 0 30px; }
+.client-logos {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.client-logos li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 26px 16px;
+  border-right: 1px solid var(--line-soft);
+}
+.client-logos li > * { filter: grayscale(1) brightness(1.1); opacity: .7; transition: filter .5s var(--ease), opacity .5s var(--ease); }
+.client-logos li:last-child { border-right: 0; }
+.client-logos li:hover > * { filter: none; opacity: 1; }
+.client-logos img { height: 54px; width: auto; object-fit: contain; }
+.client-logos img.wide { height: 34px; }
+.client-logos span { font-family: var(--font-head); font-weight: 600; font-size: .98rem; line-height: 1.2; }
+.client-logos small { display: block; font-family: var(--font-mono); font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted-soft); margin-top: 4px; font-weight: 400; }
+
+/* ---------- Statement + stats ---------- */
+.statement { position: relative; z-index: 1; padding: 110px 0 60px; }
+.statement-text {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.6vw, 3.3rem);
+  line-height: 1.18;
+  letter-spacing: -.025em;
+  margin: 0;
+  max-width: 22em;
+}
+html.cine .statement-text .sw { opacity: .14; transition: none; }
+.stats {
+  list-style: none;
+  padding: 0;
+  margin: 80px 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  border-top: 1px solid var(--line-soft);
+}
+.stats li { padding-top: 26px; }
+.stats strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+}
+.stats span { display: block; margin-top: 10px; color: var(--muted); font-size: .9rem; max-width: 20ch; }
+
+/* ---------- Stack with real logos ---------- */
+.stack { position: relative; z-index: 1; padding: 110px 0; }
+.stack-title { font-size: clamp(2rem, 5vw, 4rem); letter-spacing: -.035em; text-transform: uppercase; line-height: 1; margin-bottom: 60px; }
+.stack-group { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 26px 0; border-top: 1px solid var(--line-soft); }
+.stack-group h3 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 18px;
+}
+.stack-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.stack-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line-soft);
+  background: rgba(255,255,255,.03);
+  overflow: hidden;
+  transition: border-color .4s var(--ease), transform .4s var(--ease), background .4s;
+}
+.stack-tile::before {
+  content: "";
+  position: absolute;
+  inset: auto -30% -70% -30%;
+  height: 120%;
+  background: radial-gradient(closest-side, var(--brand), transparent);
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+}
+.stack-tile svg { position: relative; width: 26px; height: 26px; flex: none; fill: var(--brand); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--brand) 40%, transparent)); }
+.stack-tile span { position: relative; font-weight: 600; font-size: .92rem; }
+.stack-tile:hover { border-color: color-mix(in srgb, var(--brand) 60%, transparent); transform: translateY(-4px); background: rgba(255,255,255,.05); }
+.stack-tile:hover::before { opacity: .22; }
+.stack-extra { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; justify-content: center; }
+
+/* ---------- Reel additions ---------- */
+.reel-client {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--reel-accent) 18%, transparent);
+  color: var(--reel-accent);
+  border: 1px solid color-mix(in srgb, var(--reel-accent) 45%, transparent);
+}
+.reel-slide.is-client .reel-title { margin-top: 12px; }
+.reel-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: -6px 0 22px; max-width: 420px; }
+.reel-gallery img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 6px; border: 1px solid var(--line-soft); transition: transform .4s var(--ease); }
+.reel-gallery img:hover { transform: scale(1.06); }
+@media (min-width: 1000px) and (max-height: 820px) {
+  html.cine .reel-desc { font-size: .88rem; margin-bottom: 14px; }
+  html.cine .reel-title { font-size: clamp(2rem, 3.6vw, 3.4rem); }
+}
+
+/* ---------- Contact: WhatsApp + socials ---------- */
+.contact-list .multi { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.wa-cta { margin: 26px 0 8px; }
+.wa-cta .btn span { display: inline-flex; align-items: center; gap: 10px; }
+.social-grid { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.social-grid a {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: .85rem;
+  transition: border-color .3s, background .3s, transform .3s var(--ease);
+}
+.social-grid a small { font-family: var(--font-mono); font-size: .65rem; color: var(--muted-soft); font-weight: 400; }
+.social-grid a:hover { border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.05); transform: translateY(-3px); }
+.cine-hero .hero-social { flex-wrap: wrap; }
+.cine-hero .hero-social a { width: 38px; height: 38px; }
+
+.wa-float {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  z-index: 200;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #25D366;
+  color: #fff;
+  box-shadow: 0 14px 30px -10px rgba(37, 211, 102, .6);
+  transition: transform .3s var(--ease);
+}
+.wa-float:hover { transform: scale(1.08); }
+
+@media (max-width: 999px) {
+  .client-logos { grid-template-columns: repeat(2, 1fr); }
+  .client-logos li:nth-child(2) { border-right: 0; }
+  .client-logos li:nth-child(-n+2) { border-bottom: 1px solid var(--line-soft); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stack-group { grid-template-columns: 1fr; gap: 12px; }
+  .stack-group h3 { padding-top: 0; }
+  .social-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .client-logos li { flex-direction: column; text-align: center; }
+  .stack-grid { grid-template-columns: repeat(2, 1fr); }
+  .wa-float { right: 16px; bottom: 86px; width: 52px; height: 52px; }
+}
+.reel-figure figcaption b { justify-self: start; }
+.stack-tile span { min-width: 0; line-height: 1.25; }
+@media (max-width: 560px) {
+  .stack-tile { padding: 14px 12px; gap: 10px; }
+  .stack-tile span { font-size: .84rem; }
+}

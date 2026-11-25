@@ -228,6 +228,56 @@
     scrollTrigger: { trigger: '.archive-list', start: 'top 85%' },
   });
 
+  // ---------- Statement: words light up as you scroll ----------
+  const statement = $('.statement-text');
+  if (statement) {
+    const words = statement.textContent.trim().split(/\s+/);
+    statement.textContent = '';
+    words.forEach((w, i) => {
+      const s = document.createElement('span');
+      s.className = 'sw';
+      s.textContent = w;
+      statement.appendChild(s);
+      if (i < words.length - 1) statement.appendChild(document.createTextNode(' '));
+    });
+    gsap.to($$('.sw', statement), {
+      opacity: 1, ease: 'none', stagger: .1,
+      scrollTrigger: { trigger: statement, start: 'top 80%', end: 'bottom 45%', scrub: true },
+    });
+  }
+
+  // ---------- Stats count up ----------
+  $$('.stats strong[data-count]').forEach((el) => {
+    const end = Number(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const o = { v: 0 };
+    el.textContent = '0' + suffix;
+    gsap.to(o, {
+      v: end, duration: 1.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      onUpdate: () => { el.textContent = Math.round(o.v) + suffix; },
+    });
+  });
+
+  // ---------- Clients and stack ----------
+  gsap.fromTo('.client-logos li', { autoAlpha: 0, y: 30 }, {
+    autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', stagger: .1,
+    scrollTrigger: { trigger: '.client-logos', start: 'top 88%' },
+  });
+  const stackTitle = $('.stack-title');
+  if (stackTitle) {
+    gsap.from(splitWords(stackTitle), {
+      yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .06,
+      scrollTrigger: { trigger: stackTitle, start: 'top 85%' },
+    });
+  }
+  $$('.stack-group').forEach((g) => {
+    gsap.fromTo($$('.stack-tile', g), { autoAlpha: 0, y: 26, scale: .94 }, {
+      autoAlpha: 1, y: 0, scale: 1, duration: .7, ease: 'power3.out', stagger: .045,
+      scrollTrigger: { trigger: g, start: 'top 88%' },
+    });
+  });
+
   // ---------- Cursor ----------
   const cursor = $('.cine-cursor');
   if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
