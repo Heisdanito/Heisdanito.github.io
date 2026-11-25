@@ -47,17 +47,28 @@
     }
     return $$('.char', el);
   }
+  // Wraps each word for a masked reveal; words inside <em> keep their emphasis
   function splitWords(el) {
-    const words = el.textContent.trim().split(/\s+/);
+    const parts = [];
+    Array.from(el.childNodes).forEach((n) => {
+      const isEm = n.nodeType === 1 && n.tagName === 'EM';
+      n.textContent.split(/\s+/).filter(Boolean).forEach((w) => parts.push([w, isEm]));
+    });
     el.textContent = '';
-    words.forEach((w, i) => {
+    parts.forEach(([w, isEm], i) => {
       const outer = document.createElement('span');
       outer.className = 'word';
       const inner = document.createElement('span');
-      inner.textContent = w;
+      if (isEm) {
+        const em = document.createElement('em');
+        em.textContent = w;
+        inner.appendChild(em);
+      } else {
+        inner.textContent = w;
+      }
       outer.appendChild(inner);
       el.appendChild(outer);
-      if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+      if (i < parts.length - 1) el.appendChild(document.createTextNode(' '));
     });
     return $$('.word > span', el);
   }
@@ -166,9 +177,12 @@
       active = i;
       const accent = slides[i].style.getPropertyValue('--reel-accent') || '#ffffff';
       if (glow) gsap.to(glow, { backgroundColor: accent, duration: .8, ease: 'power2.out' });
+      // The whole page picks up the brand colour of the project on screen
+      root.style.setProperty('--accent-live', accent);
       if (counterEl) counterEl.textContent = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
     };
     setActive(0);
+    root.style.removeProperty('--accent-live');
 
     const hTween = gsap.to(strip, {
       x: () => -dist(),
@@ -182,11 +196,24 @@
         invalidateOnRefresh: true,
         // Settle on a whole slide when scrolling stops, like cutting between shots
         snap: { snapTo: 1 / (total - 1), duration: { min: .35, max: .9 }, delay: .08, ease: 'power2.inOut' },
+        onToggle(self) {
+          if (self.isActive) { active = -1; setActive(Math.min(total - 1, Math.round(self.progress * (total - 1)))); }
+          // Scrolling back above the reel restores the default accent; going past it,
+          // the archive trigger below takes care of that once the next section is in view.
+          else if (self.direction < 0) root.style.removeProperty('--accent-live');
+        },
         onUpdate(self) {
           if (bar) bar.style.transform = `scaleX(${self.progress})`;
           setActive(Math.min(total - 1, Math.round(self.progress * (total - 1))));
         },
       },
+    });
+
+    ScrollTrigger.create({
+      trigger: '.archive',
+      start: 'top 55%',
+      onEnter: () => root.style.removeProperty('--accent-live'),
+      onLeaveBack: () => { active = -1; setActive(total - 1); },
     });
 
     slides.forEach((s, i) => {
@@ -231,15 +258,26 @@
   // ---------- Statement: words light up as you scroll ----------
   const statement = $('.statement-text');
   if (statement) {
-    const words = statement.textContent.trim().split(/\s+/);
+    // Split into word spans while keeping <em> emphasis intact
+    const wrapWords = (text, parent, em) => {
+      text.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { parent.appendChild(document.createTextNode(' ')); return; }
+        const s = document.createElement('span');
+        s.className = 'sw';
+        if (em) {
+          const e = document.createElement('em');
+          e.textContent = part;
+          s.appendChild(e);
+        } else {
+          s.textContent = part;
+        }
+        parent.appendChild(s);
+      });
+    };
+    const nodes = Array.from(statement.childNodes);
     statement.textContent = '';
-    words.forEach((w, i) => {
-      const s = document.createElement('span');
-      s.className = 'sw';
-      s.textContent = w;
-      statement.appendChild(s);
-      if (i < words.length - 1) statement.appendChild(document.createTextNode(' '));
-    });
+    nodes.forEach((n) => wrapWords(n.textContent, statement, n.nodeType === 1));
     gsap.to($$('.sw', statement), {
       opacity: 1, ease: 'none', stagger: .1,
       scrollTrigger: { trigger: statement, start: 'top 80%', end: 'bottom 45%', scrub: true },

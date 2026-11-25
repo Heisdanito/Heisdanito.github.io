@@ -15,6 +15,17 @@
 
   const mouse = { x: -9999, y: -9999, active: false };
 
+  // Dot colour follows the light/dark theme (set in CSS as --particle-rgb)
+  let dotRGB = '255,255,255';
+  let dotAlpha = 1;
+  function readTheme() {
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim();
+    if (v) dotRGB = v.replace(/\s+/g, '');
+    dotAlpha = document.documentElement.getAttribute('data-theme') === 'light' ? 0.55 : 1;
+  }
+  readTheme();
+  window.addEventListener('themechange', readTheme);
+
   const SPACING = window.innerWidth < 700 ? 34 : 26;
 
   function resize() {
@@ -95,7 +106,7 @@
 
       ctx.beginPath();
       ctx.arc(px, py, radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${brightness.toFixed(3)})`;
+      ctx.fillStyle = `rgba(${dotRGB},${(brightness * dotAlpha).toFixed(3)})`;
       ctx.fill();
     }
 

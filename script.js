@@ -1,6 +1,27 @@
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Light / dark theme. The first paint is handled by the inline script in <head>;
+// this wires up the toggle and follows the system setting until the visitor picks one.
+(() => {
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const apply = (theme, save) => {
+    root.setAttribute('data-theme', theme);
+    if (save) { try { localStorage.setItem('theme', theme); } catch (e) {} }
+    window.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
+  };
+  toggle?.addEventListener('click', () => {
+    apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+  });
+  const media = matchMedia('(prefers-color-scheme: light)');
+  media.addEventListener?.('change', (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (err) {}
+    if (!saved) apply(e.matches ? 'light' : 'dark', false);
+  });
+})();
+
 // Mobile nav toggle
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
@@ -143,12 +164,12 @@ Facts about Daniel (Heisdanito):
   - Champions Restaurant — ordering and reservations platform for Champions Chicken in Berekum, Ghana: menu, online orders with delivery quotes, table reservations, a full order workflow (pending to delivered), hardened security. PHP + MySQL. GitHub: https://github.com/Heisdanito/champion-restaurant-0098
   - SAHESS E-Voting — the voting system for SAHESS student council / prefect elections: voter upload, candidates per category, one vote per student, live results, live API for other schools. PHP + MySQL. GitHub: https://github.com/Heisdanito/school-e-votting
   - UEW Library — visitor tracking for the University of Education, Winneba library: staff record visits from a phone or desk, live rolling count, dashboards by gender/weekday/staff, exportable reports. React + Expo + PHP + MySQL.
-  - SocialMate — a full social network (feeds, stories, reels, live streaming with gifts, chat and calls, groups, jobs, wallet, AI chat), Expo app + web + admin. Live: https://socialmate.online
+  - SocialMate — a full social network (feeds, stories, reels, live streaming with gifts, chat and calls, groups, jobs, wallet, AI chat), Expo app + web + admin. Web: https://socialmate.online · Google Play: https://play.google.com/store/apps/details?id=com.anonymous.socialmate · App Store: coming soon
 - Other recent projects (2026):
   - HEIS-SMS — multi-tenant school management platform: per-school data, branding and grading, attendance, timetables, finance with MoMo/Paystack, AI performance evaluation. Raw PHP 8.2 + React 19 + MySQL. Private repo.
   - Infoctess Attendance SaaS — face-verified, geofenced, device-bound class attendance for UEW. PHP API, Expo student app, React web console for lecturers and course reps. Private repo.
   - KOTB Marketplace — multi-vendor e-commerce for Ghana with seller KYC (Ghana Card), Seller Center, admin, Paystack checkout. React + raw PHP + Expo. Private repo.
-  - LocalBite — food delivery for Winneba: one Expo app for customers, sellers and riders, web ordering, admin dashboard, Paystack split payments. Private repo.
+  - LocalBite — food delivery for Winneba: one Expo app for customers, sellers and riders, web ordering, admin dashboard, Paystack split payments. Web: https://localbite.store · Android app on Google Play · App Store: coming soon.
   - Afrocupid — dating web app with swipe deck, matching, chat and Paystack premium. Private repo.
   - MicMe — use your phone as a PC microphone, camera and screen, plus two-way file sharing over hotspot, USB or Wi-Fi. Electron + React Native. GitHub: https://github.com/Heisdanito/micme
   - Church CMS — fully configurable church management: members, attendance, giving, sermons with audio. PHP + React + Expo. Private repo.
