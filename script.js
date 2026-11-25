@@ -62,7 +62,9 @@ const navObserver = new IntersectionObserver((entries) => {
       navAnchors.forEach(a => a.classList.toggle('active', a.dataset.nav === id));
     }
   });
-}, { threshold: 0.4, rootMargin: '-74px 0px -50% 0px' });
+// A section counts as active while it crosses the middle of the screen, which also
+// works for the very tall pinned project reel.
+}, { threshold: 0, rootMargin: '-50% 0px -50% 0px' });
 sections.forEach(sec => navObserver.observe(sec));
 
 // Rotating hero role text
@@ -137,7 +139,20 @@ Facts about Daniel (Heisdanito):
 - Role: Frontend developer, also does graphic design and video editing.
 - Studies at the University of Education, Winneba (UEW), Ghana.
 - Core skills: React, PHP, HTML, CSS, MySQL, Node.js, React Native (Expo), UI/UX design.
-- Projects:
+- Recent projects (2026):
+  - HEIS-SMS — multi-tenant school management platform: per-school data, branding and grading, attendance, timetables, finance with MoMo/Paystack, AI performance evaluation. Raw PHP 8.2 + React 19 + MySQL. Private repo.
+  - Infoctess Attendance SaaS — face-verified, geofenced, device-bound class attendance for UEW. PHP API, Expo student app, React web console for lecturers and course reps. Private repo.
+  - KOTB Marketplace — multi-vendor e-commerce for Ghana with seller KYC (Ghana Card), Seller Center, admin, Paystack checkout. React + raw PHP + Expo. Private repo.
+  - LocalBite — food delivery for Winneba: one Expo app for customers, sellers and riders, web ordering, admin dashboard, Paystack split payments. Private repo.
+  - Afrocupid — dating web app with swipe deck, matching, chat and Paystack premium. Live: https://afrocupid.online
+  - MicMe — use your phone as a PC microphone, camera and screen, plus two-way file sharing over hotspot, USB or Wi-Fi. Electron + React Native. GitHub: https://github.com/Heisdanito/micme
+  - Church CMS — fully configurable church management: members, attendance, giving, sermons with audio. PHP + React + Expo. Private repo.
+  - Mirror — private, offline journaling app with mood tracking and insights. React Native + Expo + SQLite. GitHub: https://github.com/Heisdanito/mirror
+  - Food Commerce — online ordering kit for a single restaurant (customer, kitchen and rider apps + owner dashboard). Private repo.
+  - Side by Side — dating app for African and diaspora singles (Expo, React, PHP, MySQL). Private repo.
+  - AI Predict — mobile-first football predictions app with MoMo activation and diamond-unlocked picks. React + PHP + MySQL. Private repo.
+  - For private projects, visitors can email Daniel to request a demo.
+- Earlier projects:
   - Sahess E-Voting System — secure online election platform for Sacred Heart School. Live: http://hesshub.infinityfreeapp.com/voting/ · GitHub: https://github.com/Heisdanito/school-e-votting
   - Champion Restaurant — online food ordering system. GitHub: https://github.com/Heisdanito/champion-restaurant-0098
   - Infoctess — mobile & web attendance-marking system (React Native/Expo + web dashboard). GitHub: https://github.com/Heisdanito/infoctess

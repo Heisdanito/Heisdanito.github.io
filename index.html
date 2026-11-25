@@ -9,8 +9,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="cinematic.css">
+<script>
+  // Turn on the cinematic layer before first paint, unless the visitor prefers reduced motion.
+  // Safety net: if the animation scripts never load, drop the preloader after 6s.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('cine');
+    setTimeout(function () {
+      if (!document.documentElement.classList.contains('cine-ready')) document.documentElement.classList.remove('cine');
+    }, 6000);
+  }
+</script>
 </head>
 <body>
+
+<div class="preloader" aria-hidden="true">
+  <div class="preloader-panel top"></div>
+  <div class="preloader-panel bottom"></div>
+  <div class="preloader-inner"><span class="preloader-count">000</span>Heisdanito — loading reel<div class="preloader-bar"><i></i></div></div>
+</div>
+<div class="film-grain" aria-hidden="true"></div>
+<div class="film-vignette" aria-hidden="true"></div>
+<div class="letterbox top" aria-hidden="true"></div>
+<div class="letterbox bottom" aria-hidden="true"></div>
+<div class="cine-cursor" aria-hidden="true"><span>View</span></div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 <canvas id="bgCanvas" aria-hidden="true"></canvas>
@@ -26,7 +48,7 @@
       <li><a href="#about" data-nav="about">About</a></li>
       <li><a href="#skills" data-nav="skills">Skills</a></li>
       <li><a href="#gallery" data-nav="gallery">Gallery</a></li>
-      <li><a href="#projects" data-nav="projects">Projects</a></li>
+      <li><a href="#projects" data-nav="projects">Work</a></li>
       <li><a href="#resume" data-nav="resume">Resume</a></li>
       <li><a href="#contact" class="nav-cta" data-nav="contact">Contact</a></li>
     </ul>
@@ -35,21 +57,31 @@
 
 <main>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-text reveal">
-        <p class="eyebrow"><span class="eyebrow-dot"></span>Hello, I'm</p>
-        <h1>Daniel <span class="gradient-text">“Heisdanito”</span></h1>
+  <!-- HERO: opening shot -->
+  <section class="hero cine-hero">
+    <div class="container">
+      <div class="hero-kicker"><span class="rec">Now playing — Portfolio ’26</span><span>Winneba, Ghana · HeisDev</span></div>
+      <div class="hero-stage">
+        <h1 class="hero-name" aria-label="Daniel Heisdanito">
+          <span class="line"><span class="line-text">Daniel</span></span>
+          <span class="line"><span class="line-text">Heisdanito</span></span>
+        </h1>
+        <figure class="hero-portrait">
+          <img src="images/hero.jpg" alt="Portrait of Daniel, Heisdanito">
+          <figcaption>Daniel · Full-stack dev</figcaption>
+        </figure>
+      </div>
+      <div class="hero-foot">
         <p class="hero-role">
           <span class="mono-bracket">&lt;</span><span id="heroRole">Frontend Developer</span><span class="cursor-blink">|</span><span class="mono-bracket">/&gt;</span>
         </p>
-        <p class="hero-tagline">I build clean, functional interfaces with React, PHP and MySQL — turning rough ideas into products people can actually use.</p>
+        <p class="hero-tagline">I build products people actually use: school platforms, marketplaces, delivery and dating apps. React and Expo on the front, raw PHP and MySQL underneath.</p>
         <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary"><span>View Projects</span></a>
-          <a href="#contact" class="btn btn-outline"><span>Get In Touch</span></a>
+          <a href="#projects" class="btn btn-primary"><span>Watch the reel</span></a>
+          <a href="#contact" class="btn btn-outline"><span>Get in touch</span></a>
         </div>
-        <ul class="hero-social">
+      </div>
+      <ul class="hero-social">
           <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener" aria-label="GitHub">
             <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.57.11.78-.25.78-.55v-2.1c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.8 1.18 1.83 1.18 3.09 0 4.43-2.69 5.4-5.26 5.69.42.36.78 1.07.78 2.15v3.19c0 .31.2.67.79.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
           </a></li>
@@ -60,18 +92,16 @@
             <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M2 5h20a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm19.4 2.6-8.9 6.5a1 1 0 0 1-1 0L2.6 7.6"/></svg>
           </a></li>
         </ul>
-      </div>
-      <div class="hero-media reveal" data-reveal-delay="150">
-        <div class="hero-photo-frame">
-          <img src="images/hero.jpg" alt="Portrait of Daniel, Heisdanito" class="hero-photo">
-          <div class="hero-photo-glow"></div>
-        </div>
-        <div class="hero-badge hero-badge-1">Available for work</div>
-        <div class="hero-badge hero-badge-2">6+ projects shipped</div>
-      </div>
     </div>
-    <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+    <div class="hero-scroll" aria-hidden="true">Scroll<i></i></div>
   </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>React</span><span class="outline">Expo</span><span>PHP</span><span class="outline">MySQL</span><span>Paystack</span><span class="outline">Node.js</span><span>UI/UX</span><span class="outline">Electron</span>
+      <span>React</span><span class="outline">Expo</span><span>PHP</span><span class="outline">MySQL</span><span>Paystack</span><span class="outline">Node.js</span><span>UI/UX</span><span class="outline">Electron</span>
+    </div>
+  </div>
 
   <!-- ABOUT -->
   <section class="about" id="about">
@@ -166,144 +196,213 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="projects" id="projects">
-    <div class="container">
-      <p class="section-label center reveal"><span class="section-num">04</span>Projects</p>
-      <h2 class="center reveal">Things I've built</h2>
-      <div class="projects-grid">
-
-        <article class="project-card reveal" data-reveal-delay="0">
-          <div class="project-thumb">
-            <span>SE</span>
-          </div>
-          <div class="project-body">
-            <h3>Sahess E-Voting System</h3>
-            <p>A secure online election platform built for Sacred Heart School — student authentication, ballot management, encrypted vote storage and instant results.</p>
-            <div class="project-tags">
-              <span>PHP</span><span>MySQL</span><span>JavaScript</span>
-            </div>
-            <div class="project-links">
-              <a href="http://hesshub.infinityfreeapp.com/voting/" target="_blank" rel="noopener">Live Demo <i>→</i></a>
-              <a href="https://github.com/Heisdanito/school-e-votting" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="60">
-          <div class="project-thumb">
-            <span>CR</span>
-          </div>
-          <div class="project-body">
-            <h3>Champion Restaurant</h3>
-            <p>An online food ordering system in the style of a fast-food chain — browse the menu, build an order and check out.</p>
-            <div class="project-tags">
-              <span>PHP</span><span>MySQL</span><span>HTML/CSS</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito/champion-restaurant-0098" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="120">
-          <div class="project-thumb">
-            <span>IN</span>
-          </div>
-          <div class="project-body">
-            <h3>Infoctess — Attendance System</h3>
-            <p>A mobile and web attendance-marking system for tracking check-ins in real time, with a React Native (Expo) app and a companion web dashboard.</p>
-            <div class="project-tags">
-              <span>React Native</span><span>React</span><span>Node.js</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito/infoctess" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="0">
-          <div class="project-thumb">
-            <span>WM</span>
-          </div>
-          <div class="project-body">
-            <h3>Water Management System</h3>
-            <p>A web platform for monitoring and managing water usage and distribution.</p>
-            <div class="project-tags">
-              <span>React</span><span>Node.js</span>
-            </div>
-            <div class="project-links">
-              <a href="https://heis-host-2.infinityfreeapp.com/?i=1" target="_blank" rel="noopener">Live Demo <i>→</i></a>
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="60">
-          <div class="project-thumb">
-            <span>SM</span>
-          </div>
-          <div class="project-body">
-            <h3>School Management System</h3>
-            <p>A PHP-based school management system covering admissions, classes, teachers and student records.</p>
-            <div class="project-tags">
-              <span>PHP</span><span>MySQL</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="120">
-          <div class="project-thumb">
-            <span>SO</span>
-          </div>
-          <div class="project-body">
-            <h3>Socialmate</h3>
-            <p>A social networking concept platform, designed with a strong focus on clean UI/UX.</p>
-            <div class="project-tags">
-              <span>UI/UX</span><span>React</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="0">
-          <div class="project-thumb">
-            <span>BT</span>
-          </div>
-          <div class="project-body">
-            <h3>Bus Ticket Booking System</h3>
-            <p>A VB.NET desktop application for booking and managing bus tickets — routes, seats and passenger records.</p>
-            <div class="project-tags">
-              <span>VB.NET</span><span>Desktop</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito/BusTIcketVbs" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card reveal" data-reveal-delay="60">
-          <div class="project-thumb">
-            <span>TC</span>
-          </div>
-          <div class="project-body">
-            <h3>Tailwind Resume Card</h3>
-            <p>A reusable resume/profile card component built with Tailwind CSS — drop-in personal card for a portfolio or CV site.</p>
-            <div class="project-tags">
-              <span>Tailwind CSS</span><span>HTML</span>
-            </div>
-            <div class="project-links">
-              <a href="https://github.com/Heisdanito/Tailwind-Card" target="_blank" rel="noopener">GitHub <i>→</i></a>
-            </div>
-          </div>
-        </article>
-
+  <!-- PROJECTS: cinematic reel -->
+  <section class="reel-section" id="projects">
+    <div class="container reel-head">
+      <div>
+        <p class="section-label"><span class="section-num">04</span>Selected work</p>
+        <h2><span>Now</span> <em>showing</em></h2>
       </div>
+      <div>
+        <p>11 recent products, from multi-tenant SaaS to mobile apps. Every scene below is a frame from that product, with a caption saying what you’re looking at.</p>
+        <p class="reel-note">Scenes are illustrated with sample data. LocalBite uses a real app screenshot.</p>
+      </div>
+    </div>
+    <div class="reel-pin">
+      <div class="reel-glow" aria-hidden="true"></div>
+      <div class="reel-track">
+        <article class="reel-slide" style="--reel-accent:#6d8bff">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/heis-sms.webp" alt="HEIS-SMS admin dashboard for a school, with stats, a fee chart, AI evaluation bars and a list of schools" width="1600" height="1000" loading="eager" decoding="async">
+            </div>
+            <figcaption><b>SC.01</b><span>The admin dashboard for one school. It shows the student count, attendance rate, fees collected, a monthly fee-collection chart and AI evaluation scores per student. The floating panel lists the other schools running on the same deployment.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">01 / 11</span>
+            <h3 class="reel-title">HEIS-SMS</h3>
+            <p class="reel-kicker">Multi-tenant school management platform</p>
+            <p class="reel-desc">One deployment serves many schools. Each school gets its own isolated data, branding, grading scale and licensed modules. It covers academic records, attendance, timetables, double-entry finance with MoMo and Paystack, AI performance evaluation, printable reports and ID cards, and a TV wallboard mode.</p>
+            <div class="reel-tags"><span>PHP 8.2 · no framework</span><span>React 19</span><span>MySQL</span><span>JWT</span><span>CSS Modules</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20HEIS-SMS">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#34d399">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/infoctess.webp" alt="Map with a geofence around a lecture hall, next to a phone running face verification" width="1600" height="1000" loading="eager" decoding="async">
+            </div>
+            <figcaption><b>SC.02</b><span>Left: the geofence drawn around a lecture hall, with the student’s location inside it. Right: the student app’s check-in screen running the face scan and ticking off each of the five checks.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">02 / 11</span>
+            <h3 class="reel-title">Infoctess</h3>
+            <p class="reel-kicker">Face-verified, geofenced class attendance</p>
+            <p class="reel-desc">Attendance for UEW lectures. Students check in from a phone bound to their index number, and every check-in passes five checks: device, enrolment, a geofence around the lecture hall, a selfie face match, and a password fallback that stays pending until a lecturer confirms it. Lecturers and course reps run sessions from a web console.</p>
+            <div class="reel-tags"><span>PHP API</span><span>Expo</span><span>React + Vite</span><span>Node face service</span><span>MySQL</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20Infoctess">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#ff8a3d">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/kotb.webp" alt="KOTB storefront with flash-deal product tiles, next to a mobile checkout screen" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.03</b><span>The storefront: flash-deal product tiles with a filter for the region each item ships from. Beside it is the mobile checkout, where the shopper pays by MoMo, card or bank transfer through Paystack.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">03 / 11</span>
+            <h3 class="reel-title">KOTB Marketplace</h3>
+            <p class="reel-kicker">Multi-vendor e-commerce for Ghana</p>
+            <p class="reel-desc">Customers shop, verified sellers run their own shops from a Seller Center, and an admin controls the whole site. Sellers register with a Ghana Card and payout details and go through a KYC review. Checkout runs on Paystack (MoMo, card or bank) with prices calculated on the server and signed webhooks. SMS and push notifications are built in.</p>
+            <div class="reel-tags"><span>React 18</span><span>Mantine</span><span>Raw PHP 8</span><span>Paystack</span><span>Expo</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20KOTB%20Marketplace">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#22c55e">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/localbite.webp" alt="Screenshot of the LocalBite app home screen showing Ghanaian dishes, next to order and payout cards" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.04</b><span>A real screenshot of the LocalBite customer app: local dishes like red red and waakye, food categories and popular picks. The cards beside it show a rider delivering an order and a seller’s payout for the day.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">04 / 11</span>
+            <h3 class="reel-title">LocalBite</h3>
+            <p class="reel-kicker">Food delivery for Winneba</p>
+            <p class="reel-desc">One mobile app for customers, sellers and riders, a website for ordering from the browser, and an admin dashboard for the team. Payments split straight to each seller through Paystack subaccounts. Google sign-in, push notifications and SMS alerts keep orders moving.</p>
+            <div class="reel-tags"><span>Expo</span><span>React</span><span>PHP 8</span><span>MySQL</span><span>Paystack</span><span>FCM</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20LocalBite">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#ff4d8d">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/afrocupid.webp" alt="Illustrated Afrocupid swipe card with distance and match badges, and pass, like and super-like buttons" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.05</b><span>A profile card in the swipe deck, with distance and match-percentage badges, interest tags, and the pass, like and super-like buttons. A toast pops up when two people match. Faces are drawn as silhouettes to protect members’ privacy.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">05 / 11</span>
+            <h3 class="reel-title">Afrocupid</h3>
+            <p class="reel-kicker">Dating web app · live</p>
+            <p class="reel-desc">A full dating platform. It has 18+ sign-up with a four-step onboarding, a draggable swipe deck with filters, matching on mutual likes with a celebration screen, chat, and premium features paid through Paystack.</p>
+            <div class="reel-tags"><span>React 18 + Vite</span><span>PHP 8</span><span>MySQLi</span><span>Paystack</span></div>
+            <div class="reel-links"><a href="https://afrocupid.online" target="_blank" rel="noopener">Live site ↗</a><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20Afrocupid">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#22d3ee">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/micme.webp" alt="Phone streaming live audio to the MicMe desktop app, with a QR code for pairing" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.06</b><span>The phone app streaming live audio to the desktop app’s Audio tab, which shows the input level, a 240% boost and the virtual-cable output. The QR code in the corner is used to pair the two devices.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">06 / 11</span>
+            <h3 class="reel-title">MicMe</h3>
+            <p class="reel-kicker">Your phone as a PC mic, camera and screen</p>
+            <p class="reel-desc">Stream 48 kHz audio, 1080p camera or the phone screen to a desktop app, and send files both ways. It works over a hotspot, USB or Wi-Fi and pairs with one QR scan. The desktop app can boost volume up to 300% and send audio to any output, so the phone works as a mic in Zoom, Discord or OBS.</p>
+            <div class="reel-tags"><span>Electron</span><span>React Native</span><span>Node.js</span><span>adb</span></div>
+            <div class="reel-links"><a href="https://github.com/Heisdanito/micme" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#f5b942">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/church.webp" alt="Church dashboard with member, attendance and giving totals, next to a phone playing a sermon" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.07</b><span>The Sunday overview dashboard: members, attendance and giving totals, an attendance trend and the form builder for registration fields. Next to it, the mobile app plays a sermon and takes online giving.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">07 / 11</span>
+            <h3 class="reel-title">Church CMS</h3>
+            <p class="reel-kicker">Church management, web and mobile</p>
+            <p class="reel-desc">Everything is configurable: name, logo, colours, currency and the registration form, so any church can rebrand it. Admins build member forms, managers record attendance and payments, pastors publish sermons with audio, and members give online and see their receipts.</p>
+            <div class="reel-tags"><span>PHP 8.1</span><span>React + Vite</span><span>Expo</span><span>MySQL</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20Church%20CMS">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#a78bfa">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/mirror.webp" alt="Mirror daily entry screen with a mood picker, next to a three-month mood chart" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.08</b><span>The daily entry screen with the five-step mood picker, feeling tags and a writing prompt. The card beside it is the three-month insights chart, which shows the average mood and what good days have in common.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">08 / 11</span>
+            <h3 class="reel-title">Mirror</h3>
+            <p class="reel-kicker">Private, offline journaling app</p>
+            <p class="reel-desc">A daily check-in. Pick a mood from Heavy to Bright, tag feelings and activities, answer a prompt and add photos. Insights chart your mood over weeks and months and show what your good days have in common. Everything stays on the phone in SQLite, with no account, cloud or ads.</p>
+            <div class="reel-tags"><span>React Native</span><span>Expo Router</span><span>SQLite</span><span>TypeScript</span></div>
+            <div class="reel-links"><a href="https://github.com/Heisdanito/mirror" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#ef4444">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/food.webp" alt="Kitchen order board with New, Cooking and Ready columns, next to a rider delivery screen" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.09</b><span>The kitchen board, where orders move from New to Cooking to Ready. Next to it, the rider app follows the delivery route for one order.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">09 / 11</span>
+            <h3 class="reel-title">Food Commerce</h3>
+            <p class="reel-kicker">Online ordering for a single food store</p>
+            <p class="reel-desc">A ready-made ordering system for one restaurant: a phone app for customers, kitchen staff and riders, a website with web ordering, and an owner dashboard. A new store is set up by filling in one setup file (name, colours, hours, delivery fees, payment methods) and running one command.</p>
+            <div class="reel-tags"><span>Expo</span><span>React + Vite</span><span>PHP 8.2</span><span>MySQL</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20Food%20Commerce">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#e879f9">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/sidebyside.webp" alt="Two phones showing a matches list and a chat conversation, with an admin stats card" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.10</b><span>One phone shows new matches and the message list, the other a conversation in progress. The card on the right is the admin panel’s count of active users.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">10 / 11</span>
+            <h3 class="reel-title">Side by Side</h3>
+            <p class="reel-kicker">Dating app for African and diaspora singles</p>
+            <p class="reel-desc">A dating and social app with an Expo mobile app for Android and iOS, a React website and a web admin panel, all on a raw PHP 8 and MySQL backend.</p>
+            <div class="reel-tags"><span>Expo</span><span>React</span><span>PHP 8</span><span>MySQL</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20Side%20by%20Side">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+        <article class="reel-slide" style="--reel-accent:#22c55e">
+          <figure class="reel-figure">
+            <div class="reel-frame">
+              <img src="images/projects/aipredict.webp" alt="Phone showing today’s football picks, with one unlocked and the rest blurred until unlocked" width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>SC.11</b><span>Today’s picks: a live match with its unlocked prediction, while later picks stay blurred until the user spends diamonds on them. The side cards show the live-score sync and the MoMo activation step.</span></figcaption>
+          </figure>
+          <div class="reel-info">
+            <span class="reel-index">11 / 11</span>
+            <h3 class="reel-title">AI Predict</h3>
+            <p class="reel-kicker">Football predictions app</p>
+            <p class="reel-desc">Mobile-first. Users sign up (18+), activate with a mobile-money payment and spend diamonds to unlock blurred picks. Real fixtures, live scores and team crests sync from football-data.org. Admins approve payments, post picks and mark results.</p>
+            <div class="reel-tags"><span>React 19 + Vite</span><span>PHP 8.2</span><span>MySQL</span><span>football-data.org</span></div>
+            <div class="reel-links"><a href="mailto:hesidanito@gmail.com?subject=Demo%20request%3A%20AI%20Predict">Request a demo ↗</a><span class="private">Private repo</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="reel-progress" aria-hidden="true"><i></i></div>
+      <div class="reel-counter" aria-hidden="true">01 / 11</div>
+    </div>
+    <div class="container archive">
+      <h3>Earlier work</h3>
+      <ul class="archive-list">
+          <li><a href="https://github.com/Heisdanito/school-e-votting" target="_blank" rel="noopener"><strong>Sahess E-Voting System</strong><span class="desc">Secure online elections for Sacred Heart School: student login, ballots, encrypted votes, instant results.</span><span class="stack">PHP · MySQL · JS</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito/champion-restaurant-0098" target="_blank" rel="noopener"><strong>Champion Restaurant</strong><span class="desc">Online food ordering in the style of a fast-food chain.</span><span class="stack">PHP · MySQL</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito/infoctess" target="_blank" rel="noopener"><strong>Infoctess v1</strong><span class="desc">The first version of the attendance app: an Expo app plus a web dashboard.</span><span class="stack">React Native · React · Node</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://heis-host-2.infinityfreeapp.com/?i=1" target="_blank" rel="noopener"><strong>Water Management System</strong><span class="desc">A web platform for monitoring water usage and distribution.</span><span class="stack">React · Node.js</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener"><strong>School Management System</strong><span class="desc">Admissions, classes, teachers and student records in PHP.</span><span class="stack">PHP · MySQL</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito" target="_blank" rel="noopener"><strong>Socialmate</strong><span class="desc">A social networking concept with a strong focus on UI/UX.</span><span class="stack">React · UI/UX</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito/BusTIcketVbs" target="_blank" rel="noopener"><strong>Bus Ticket Booking</strong><span class="desc">A desktop app for routes, seats and passenger records.</span><span class="stack">VB.NET</span><span class="go" aria-hidden="true">→</span></a></li>
+          <li><a href="https://github.com/Heisdanito/Tailwind-Card" target="_blank" rel="noopener"><strong>Tailwind Resume Card</strong><span class="desc">A reusable resume/profile card component.</span><span class="stack">Tailwind CSS</span><span class="go" aria-hidden="true">→</span></a></li>
+      </ul>
     </div>
   </section>
 
@@ -444,7 +543,11 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="particles.js"></script>
 <script src="script.js"></script>
+<script src="cinematic.js"></script>
 </body>
 </html>
