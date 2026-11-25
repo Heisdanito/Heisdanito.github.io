@@ -18,8 +18,8 @@
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
-<link rel="stylesheet" href="styles.css?v=20261125f">
-<link rel="stylesheet" href="cinematic.css?v=20261125f">
+<link rel="stylesheet" href="styles.css?v=20261125h">
+<link rel="stylesheet" href="cinematic.css?v=20261125h">
 <script>
   // Turn on the cinematic layer before first paint, unless the visitor prefers reduced motion.
   // Safety net: if the animation scripts never load, drop the preloader after 6s.
@@ -182,6 +182,41 @@
     <div class="container">
       <p class="section-label center reveal"><span class="section-num">02</span>Stack</p>
       <h2 class="center stack-title cine-split">The tools behind the <em>work</em></h2>
+      <div class="arch-scene" id="archScene">
+        <div class="arch-pin">
+          <div class="arch-copy" aria-live="polite">
+            <p class="arch-step is-on" data-step="0"><span>01</span>Every product starts as one thing in someone’s hand.</p>
+            <p class="arch-step" data-step="1"><span>02</span>Open it up: the interface, the logic, and the API it talks to.</p>
+            <p class="arch-step" data-step="2"><span>03</span>Behind it, a PHP API and a MySQL database on the server.</p>
+            <p class="arch-step" data-step="3"><span>04</span>And the dashboards the team runs it all from, on the web.</p>
+          </div>
+          <div class="arch-stage" aria-hidden="true">
+            <svg class="arch-wires"><path class="wire w1"/><path class="wire w2"/><path class="wire w3"/></svg>
+
+            <div class="dev phone">
+              <div class="ly ly-chassis" style="--i:0"><i class="cam"></i><i class="cam c2"></i><i class="cam c3"></i><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Android &amp; iOS</b><small><img src="images/stack/android.svg" alt="" class="ti">one codebase, both stores</small></span></span></div>
+              <div class="ly ly-services" style="--i:1"><span class="cell">PUSH</span><span class="cell">PAY</span><span class="cell">SMS</span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Services</b><small><img src="images/stack/firebase.svg" alt="" class="ti">FCM push · Paystack · SMS</small></span></span></div>
+              <div class="ly ly-api" style="--i:2"><i class="anchor" data-anchor="phone-api"></i><span class="chip big">REST</span><span class="chip">JWT</span><span class="trace t1"></span><span class="trace t2"></span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>API client</b><small><img src="images/stack/jsonwebtokens.svg" alt="" class="ti">REST · JSON · JWT auth</small></span></span></div>
+              <div class="ly ly-logic" style="--i:3"><span class="chip">TS</span><span class="chip">JS</span><span class="chip wide">STATE</span><span class="trace t3"></span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>App logic</b><small><img src="images/stack/typescript.svg" alt="" class="ti"><img src="images/stack/javascript.svg" alt="" class="ti">TypeScript · JavaScript</small></span></span></div>
+              <div class="ly ly-ui" style="--i:4"><span class="ui-bar"></span><span class="ui-hero"></span><span class="ui-row"></span><span class="ui-row short"></span><span class="ui-grid"><i></i><i></i><i></i><i></i></span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Interface</b><small><img src="images/stack/react.svg" alt="" class="ti"><img src="images/stack/expo.svg" alt="" class="ti">React Native · Expo</small></span></span></div>
+              <div class="ly ly-glass" style="--i:5"></div>
+            </div>
+
+            <div class="dev server">
+              <div class="ly slab" style="--i:0"><span class="leds"><i></i><i></i><i></i></span><span class="slab-name">MySQL</span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Database</b><small><img src="images/stack/mysql.svg" alt="" class="ti"><img src="images/stack/mariadb.svg" alt="" class="ti">MySQL · MariaDB · SQLite</small></span></span></div>
+              <div class="ly slab" style="--i:1"><i class="anchor" data-anchor="server-api"></i><span class="leds"><i></i><i></i><i></i></span><span class="slab-name">PHP API</span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>API</b><small><img src="images/stack/php.svg" alt="" class="ti">Raw PHP 8 · no framework</small></span></span></div>
+              <div class="ly slab" style="--i:2"><span class="leds"><i></i><i></i><i></i></span><span class="slab-name">Node</span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Services</b><small><img src="images/stack/nodedotjs.svg" alt="" class="ti">Node.js · face match · jobs</small></span></span></div>
+              <div class="ly slab top" style="--i:3"><span class="leds"><i></i><i></i><i></i></span><span class="slab-name">Auth</span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Security</b><small><img src="images/stack/jsonwebtokens.svg" alt="" class="ti">JWT · CSRF · rate limits</small></span></span></div>
+            </div>
+
+            <div class="dev laptop">
+              <div class="ly lap-base" style="--i:0"><span class="keys"></span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Web &amp; desktop</b><small><img src="images/stack/electron.svg" alt="" class="ti"><img src="images/stack/vite.svg" alt="" class="ti">Electron · Vite builds</small></span></span></div>
+              <div class="ly lap-screen" style="--i:1"><i class="anchor" data-anchor="laptop"></i><span class="ui-bar"></span><span class="lap-chart"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="tag"><i class="tag-line"></i><span class="tag-box"><b>Dashboards</b><small><img src="images/stack/react.svg" alt="" class="ti"><img src="images/stack/vuedotjs.svg" alt="" class="ti"><img src="images/stack/tailwindcss.svg" alt="" class="ti">React · Vue · Tailwind</small></span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       
       <div class="stack-group">
         <h3>Languages</h3>
@@ -667,8 +702,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="particles.js?v=20261125f"></script>
-<script src="script.js?v=20261125f"></script>
-<script src="cinematic.js?v=20261125f"></script>
+<script src="particles.js?v=20261125h"></script>
+<script src="script.js?v=20261125h"></script>
+<script src="cinematic.js?v=20261125h"></script>
 </body>
 </html>

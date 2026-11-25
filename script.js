@@ -342,3 +342,71 @@ aiChatForm.addEventListener('submit', async (e) => {
     });
   }, { threshold: 0.35 }).observe(deck);
 })();
+
+// ---- Project architecture: each reel slide can flip its image to a diagram
+// of how that product is put together ----
+(() => {
+  const ARCH = {
+    'Champions Restaurant': { clients: ['Customer website', 'Admin panel', 'Rider app (next)'], api: 'PHP 8 · PDO · order state machine', data: ['MySQL'], services: ['SMTP mail', 'Delivery quotes', 'Audit log'] },
+    'Sahess E-Voting': { clients: ['Student ballot', 'Admin panel', 'Results screen'], api: 'PHP · live results API', data: ['MySQL'], services: ['CSV voter import', 'Integration guide'] },
+    'UEW Library': { clients: ['Staff app (Expo)', 'Front desk (React)', 'Admin dashboard'], api: 'PHP on the library network', data: ['MySQL'], services: ['QR server pairing', 'Report export'] },
+    'SocialMate': { clients: ['Android app (Expo)', 'Web app', 'Admin (Vue)', 'Stock dashboard (Vue)'], api: 'PHP API', data: ['MySQL'], services: ['FCM push', 'Paystack', 'AI chat', 'SMS'] },
+    'HEIS-SMS': { clients: ['School portal (React 19)', 'TV wallboard', 'Mobile (planned)'], api: 'PHP 8.2 · custom router · JWT', data: ['MySQL · per-school tenancy'], services: ['MoMo / Paystack', 'OpenRouter AI', 'Notifications'] },
+    'Infoctess': { clients: ['Student app (Expo)', 'Web console (React)'], api: 'PHP · five-gate check-in', data: ['MySQL'], services: ['Node face service', 'Geofencing', 'Device binding'] },
+    'KOTB Marketplace': { clients: ['Storefront', 'Seller Center', 'Main admin', 'Shopper app (Expo)'], api: 'Raw PHP 8 JSON API', data: ['MySQL / MariaDB'], services: ['Paystack', 'SMSOnlineGH', 'Web Push + Expo push'] },
+    'LocalBite': { clients: ['Expo app: customer, seller, rider', 'Website', 'Admin (React)'], api: 'PHP 8 · /v1', data: ['MySQL'], services: ['Paystack split payments', 'Google sign-in', 'FCM', 'SMS'] },
+    'Afrocupid': { clients: ['React SPA'], api: 'PHP 8 · MySQLi', data: ['MySQL'], services: ['Paystack'] },
+    'MicMe': { clients: ['Phone app (React Native)', 'Desktop app (Electron)'], api: 'Direct link: hotspot · USB · Wi-Fi', data: ['Files → Downloads/MicMe'], services: ['48 kHz audio', 'Camera + screen stream', 'QR pairing'] },
+    'Church CMS': { clients: ['Website + blog', 'Dashboard (React)', 'Mobile app (Expo)'], api: 'PHP 8.1 · no framework', data: ['MySQL'], services: ['Audio uploads', 'Online giving', 'Form builder'] },
+    'Mirror': { clients: ['Expo app'], api: 'No server: everything stays on the phone', data: ['SQLite on device'], services: ['Camera + gallery'] },
+    'Food Commerce': { clients: ['Phone app: customer, kitchen, rider', 'Website', 'Owner dashboard'], api: 'PHP 8.2', data: ['MySQL'], services: ['MoMo / online payment', 'One-file store setup'] },
+    'Side by Side': { clients: ['Expo app', 'React website', 'Admin panel'], api: 'Raw PHP 8', data: ['MySQL'], services: ['Matching', 'Chat'] },
+    'AI Predict': { clients: ['React app', 'Admin area'], api: 'PHP 8.2', data: ['MySQL'], services: ['football-data.org sync', 'MoMo activation'] },
+  };
+
+  const el = (tag, cls, text) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  };
+  const nodes = (items, cls) => {
+    const row = el('div', 'arch-row ' + cls);
+    items.forEach((t) => row.appendChild(el('span', 'arch-node', t)));
+    return row;
+  };
+
+  document.querySelectorAll('.reel-slide').forEach((slide) => {
+    const title = slide.querySelector('.reel-title')?.textContent.trim();
+    const a = ARCH[title];
+    const frame = slide.querySelector('.reel-frame');
+    const links = slide.querySelector('.reel-links');
+    if (!a || !frame || !links) return;
+
+    const panel = el('div', 'arch-diagram');
+    panel.setAttribute('role', 'img');
+    panel.setAttribute('aria-label', `${title} architecture: ${a.clients.join(', ')} talk to ${a.api}, which uses ${a.data.join(', ')}${a.services.length ? ' and ' + a.services.join(', ') : ''}.`);
+    panel.appendChild(el('p', 'arch-kicker', 'Architecture'));
+    panel.appendChild(nodes(a.clients, 'clients'));
+    panel.appendChild(el('i', 'arch-flow'));
+    const api = el('div', 'arch-row api');
+    api.appendChild(el('span', 'arch-node core', a.api));
+    panel.appendChild(api);
+    panel.appendChild(el('i', 'arch-flow'));
+    const bottom = el('div', 'arch-row bottom');
+    a.data.forEach((t) => bottom.appendChild(el('span', 'arch-node data', t)));
+    a.services.forEach((t) => bottom.appendChild(el('span', 'arch-node svc', t)));
+    panel.appendChild(bottom);
+    frame.appendChild(panel);
+
+    const btn = el('button', 'arch-btn', 'Architecture');
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', 'false');
+    btn.addEventListener('click', () => {
+      const on = frame.classList.toggle('show-arch');
+      btn.setAttribute('aria-pressed', String(on));
+      btn.textContent = on ? 'Back to the scene' : 'Architecture';
+    });
+    links.prepend(btn);
+  });
+})();

@@ -409,6 +409,80 @@
     });
   }
 
+  // ---------- Stack: the phone opens up into its layers, then the server
+  // and laptop behind it, wired together ----------
+  const archScene = $('#archScene');
+  if (archScene) {
+    const stage = $('.arch-stage', archScene);
+    const phone = $('.dev.phone', archScene);
+    const server = $('.dev.server', archScene);
+    const laptop = $('.dev.laptop', archScene);
+    const steps = $$('.arch-step', archScene);
+    const wires = $$('.wire', archScene);
+    const anchorOf = (name) => $(`[data-anchor="${name}"]`, archScene);
+    const pts = { a: anchorOf('phone-api'), b: anchorOf('server-api'), c: anchorOf('laptop') };
+
+    // Collapsed starting state: a closed phone seen face on
+    gsap.set(phone, { '--tx': '0deg', '--tz': '0deg', '--gap': '0px', scale: 1.15 });
+    gsap.set([server, laptop], { '--gap': '0px', autoAlpha: 0, y: 60 });
+    gsap.set($$('.tag', archScene), { autoAlpha: 0 });
+    gsap.set(wires, { autoAlpha: 0 });
+
+    const center = (el) => {
+      const r = el.getBoundingClientRect();
+      const s = stage.getBoundingClientRect();
+      const k = s.width / stage.offsetWidth || 1; // the stage is scaled down on mobile
+      return { x: (r.left + r.width / 2 - s.left) / k, y: (r.top + r.height / 2 - s.top) / k };
+    };
+    const curve = (p, q) => {
+      const mx = (p.x + q.x) / 2;
+      return `M${p.x},${p.y} C${mx},${p.y} ${mx},${q.y} ${q.x},${q.y}`;
+    };
+    const drawWires = () => {
+      const a = center(pts.a), b = center(pts.b), c = center(pts.c);
+      wires[0].setAttribute('d', curve(a, b));
+      wires[1].setAttribute('d', curve(b, c));
+      wires[2].setAttribute('d', curve(a, c));
+    };
+
+    let step = 0;
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.inOut' },
+      scrollTrigger: {
+        trigger: archScene,
+        pin: '.arch-pin',
+        refreshPriority: 10,
+        start: 'top top',
+        end: '+=260%',
+        scrub: 1,
+        onUpdate(self) {
+          const s = Math.min(steps.length - 1, Math.floor(self.progress * steps.length * .999));
+          if (s !== step) {
+            step = s;
+            steps.forEach((el, i) => el.classList.toggle('is-on', i === s));
+          }
+        },
+        onToggle(self) {
+          if (self.isActive) gsap.ticker.add(drawWires);
+          else gsap.ticker.remove(drawWires);
+        },
+      },
+    });
+    tl.to(phone, { '--tx': '58deg', '--tz': '-38deg', scale: 1, duration: 1 })
+      .to(phone, { '--gap': '58px', duration: 1.2 })
+      .to($$('.tag', phone), { autoAlpha: 1, stagger: .12, duration: .4 }, '-=.9')
+      .to(server, { autoAlpha: 1, y: 0, duration: .6 })
+      .to(server, { '--gap': '46px', duration: .9 })
+      .to($$('.tag', server), { autoAlpha: 1, stagger: .1, duration: .3 }, '-=.6')
+      .to(wires[0], { autoAlpha: 1, duration: .3 }, '-=.5')
+      .to(laptop, { autoAlpha: 1, y: 0, duration: .6 })
+      .to(laptop, { '--gap': '64px', duration: .9 })
+      .to($$('.tag', laptop), { autoAlpha: 1, stagger: .1, duration: .3 }, '-=.6')
+      .to([wires[1], wires[2]], { autoAlpha: 1, duration: .3 }, '-=.5')
+      .to({}, { duration: .6 });
+    drawWires();
+  }
+
   // ---------- Cursor ----------
   const cursor = $('.cine-cursor');
   if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -425,5 +499,9 @@
     });
   }
 
+  // Pins were created out of page order (the reel before the stack scene);
+  // sort them so each one measures the page after the pins above it.
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
